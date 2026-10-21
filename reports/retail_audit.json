@@ -1,0 +1,9 @@
+{
+  "raw_rows": 541909,
+  "exact_duplicates": 5268,
+  "missing_customer_rows": 135080,
+  "nonpositive_price_rows": 2517,
+  "sales_rows": 524878,
+  "negative_quantity_value_gbp": -893979.7300000001,
+  "gross_positive_sales_gbp": 10642110.804
+}

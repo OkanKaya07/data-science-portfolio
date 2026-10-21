@@ -1,0 +1,12 @@
+{
+  "retail": {
+    "url": "https://archive.ics.uci.edu/static/public/352/online%2Bretail.zip",
+    "sha256": "f5385cbb54bbebf7196389109c6b0621faab0c304e3702548165e71c84aede8b",
+    "bytes": 23715478
+  },
+  "bike": {
+    "url": "https://archive.ics.uci.edu/static/public/275/bike%2Bsharing%2Bdataset.zip",
+    "sha256": "b70182d0d0508e9abbb79306ce5c0cec34869000f8220175ac83d11dbe845401",
+    "bytes": 279992
+  }
+}

@@ -20,5 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-Third-party UCI datasets and derived data/figures are covered by their CC BY 4.0
-terms and attribution in README.md; they are not relicensed by this notice.
+Third-party data and derived data/figures retain their source terms and
+attribution as described in the project READMEs. Retail and Bike Sharing are
+CC BY 4.0; the Air Quality source additionally specifies research-only use;
+the Bioconductor multtest package is LGPL. They are not relicensed by this notice.

@@ -5,3 +5,4 @@ data/cache/
 *.sqlite
 *.pkl
 .packages/
+node_modules/

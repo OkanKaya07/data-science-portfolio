@@ -36,6 +36,18 @@ Development: **584 days through 6 August 2012**. Holdout: **147 days from 7 Augu
 
 The selected model reduces holdout MAE by approximately **68.4%** relative to the training-mean baseline in this particular split. This is a conditional estimate using observed same-day weather. It does not establish day-ahead accuracy or generalization to another city or year. Permutation importance is descriptive and is not causal evidence.
 
+## 4. Excel operations dashboard
+
+The workbook includes 731 daily source records and summarizes **3,292,679 rentals**. Registered rentals represent **81.17%** of the total. SUMIFS/COUNTIFS calculate monthly volume, observed days, and rider mix. The full total reconciles to the source; changing a source count by +10 changed the summary by +10, and the change was restored before export. Cached export values, chart references, and line color were checked. Both sheets were visually reviewed. Native Excel desktop recalculation was not separately exercised.
+
+## 5. Python sensor-data application
+
+The real UCI CSV contains **9,357 valid timestamped rows**, with 114 date-empty trailing rows skipped. The actual file spans **10 March 2004–4 April 2005**. There are 1,683 missing CO readings. The CLI preserves missing values as SQL NULL and exports daily coverage-qualified averages. Five unit tests pass, including repeat-load idempotence and malformed-input rejection.
+
+## 6. R leukemia expression analysis
+
+The Golub subset has **3,051 features and 38 samples**: 27 ALL and 11 AML. Two-sided Welch tests with BH correction identify **695 features at adjusted p < 0.05**. Unsupervised PCA of the 500 highest-variance scaled features explains **19.97%** of variance on PC1 and **12.41%** on PC2. This is a small historical exploratory dataset, with no independent replication or clinical validation. Effects use the supplied preprocessed scale and are not log2 fold changes.
+
 ## Verification
 
-Four integration tests pass: sales totals reconcile across SQL exports; customer counts and shares reconcile; chronological fold boundaries and excluded leakage columns are checked; reported selected-model MAE matches saved predictions. All three chart files were generated from the full datasets.
+Nine Python tests pass: four existing output integration checks and five sensor-pipeline unit tests. The R script validates dimensions, class counts, finite inputs, and adjusted p-value bounds. Excel calculations, temporary input-change behavior, saved formula caches, native chart bindings, and visual layout were verified. Reported results come from the real source files.

@@ -1,0 +1,3 @@
+cluster,customers,median_recency_days,median_orders,median_spend_gbp,revenue_gbp,revenue_share_pct
+0,1652,16.0,6.0,2077.92,7549691.191000001,84.95008141529118
+1,2686,95.0,1.0,363.65,1337517.703,15.049918584708804

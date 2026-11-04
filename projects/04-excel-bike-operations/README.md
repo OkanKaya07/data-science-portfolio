@@ -4,6 +4,17 @@
 
 Download [bike_operations.xlsx](bike_operations.xlsx) and open it in Excel. The workbook contains 731 daily source records and a formula-driven monthly report with a native editable line chart. Source counts stay numeric, dates are Excel dates, the source is filterable, and its headers are frozen.
 
+## What I built
+
+I used Excel SUMIFS formulas to aggregate daily rentals by month and checked the report against its source. The totals matched across 731 days and 3,292,679 rentals, with a reconciliation difference of zero.
+
+```javascript
+  `=SUMIFS('Daily source'!$D$6:$D${end},${criteria})`,
+  `=SUMIFS('Daily source'!$E$6:$E${end},${criteria})`,
+```
+
+[See this code in context](../../projects/04-excel-bike-operations/build_workbook.mjs#L37) · [Inspect the results](../../projects/04-excel-bike-operations/verification.json)
+
 ## Excel skills demonstrated
 
 - Bounded `SUMIFS` and `COUNTIFS` with inclusive month starts and exclusive next-month boundaries.

@@ -4,6 +4,18 @@
 
 This Python application demonstrates programming beyond a notebook: immutable dataclasses, type hints, schema validation, localized number parsing, meaningful exceptions, command-line configuration, logging, atomic database replacement, SQL aggregation, provenance hashes, and unit tests. It uses the Python standard library only.
 
+## What I built
+
+I used Python’s csv and sqlite3 modules to load sensor readings and handle missing values explicitly. Of 9,357 hourly records, 1,683 lacked a CO reading. Preserving missing readings keeps them from artificially lowering daily averages.
+
+```python
+    parsed = float(value.replace(',', '.'))
+    if parsed == -200:
+        return None
+```
+
+[See this code in context](../../projects/05-python-air-quality/air_quality.py#L33) · [Inspect the results](../../projects/05-python-air-quality/reports/quality_report.json)
+
 ## Run
 
 From the repository root, with Python 3.12:

@@ -2,6 +2,18 @@
 
 **Decision:** Where should a retailer focus performance monitoring and commercial investigation?
 
+## Step-by-step walkthrough
+
+1. **Audit invoice lines.** I started with 541,909 UCI Online Retail invoice lines. I removed exact duplicates and separated cancellations and nonpositive amounts before calculating positive sales.
+2. **Count orders once.** In SQLite, I grouped by month and counted distinct invoice numbers. Counting lines instead would give larger baskets more weight in the order count. [Open the implementation](../../sql/retail.sql#L3-L11).
+
+![Source walkthrough showing the input, method and exact code excerpt](walkthrough/source.png)
+
+3. **Inspect the output.** Open [monthly_sales.csv](../../reports/monthly_sales.csv) and the [analysis figure](../../reports/retail_monthly.png). The browser capture below shows values from that artifact.
+4. **Interpret the result.** November 2011 reached £1.50m across 2,769 invoices. December includes only nine days, so the last bar cannot establish a fall in demand.
+
+![Output walkthrough showing measured values and their interpretation](walkthrough/result.png)
+
 ## What I built
 
 I used pandas to separate cancelled invoices and nonpositive lines before loading sales into SQLite. Of 541,909 source lines, 524,878 qualified as positive sales, totaling £10.64 million. This measures gross positive sales before returns.

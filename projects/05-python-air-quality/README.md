@@ -4,6 +4,18 @@
 
 This Python application demonstrates programming beyond a notebook: immutable dataclasses, type hints, schema validation, localized number parsing, meaningful exceptions, command-line configuration, logging, atomic database replacement, SQL aggregation, provenance hashes, and unit tests. It uses the Python standard library only.
 
+## Step-by-step walkthrough
+
+1. **Handle missing sensor readings.** I parsed the UCI sensor file with Python’s csv module. I converted decimal commas and replaced the source’s −200 missing-value marker with SQL NULL so it could not distort the average.
+2. **Require enough observations.** In SQLite I counted valid CO readings separately from recorded hours. I kept the observed average and a second average that is populated only when at least 18 hours have valid readings. [Open the implementation](air_quality.py#L99-L102).
+
+![Source walkthrough showing the input, method and exact code excerpt](walkthrough/source.png)
+
+3. **Inspect the output.** Open [daily_summary.csv](reports/daily_summary.csv). The browser capture below shows values from that artifact.
+4. **Interpret the result.** On 10 March the six valid readings averaged 1.97 mg/m³, but the coverage-qualified field is blank. On 11 March there were 23 valid hours, so the qualified average is 2.24 mg/m³.
+
+![Output walkthrough showing measured values and their interpretation](walkthrough/result.png)
+
 ## What I built
 
 I used Python’s csv and sqlite3 modules to load sensor readings and handle missing values explicitly. Of 9,357 hourly records, 1,683 lacked a CO reading. Preserving missing readings keeps them from artificially lowering daily averages.

@@ -12,6 +12,12 @@ I used pandas to separate cancelled invoices and nonpositive lines before loadin
 
 [See this code in context](../../run.py#L73) · [Inspect the results](../../reports/retail_audit.json)
 
+## Reading the figure
+
+Each bar adds up eligible invoice lines for one month. November 2011 reached £1.50m across 2,769 orders, up 30.6% from October. December’s much shorter bar covers only nine days, so it cannot establish a fall in demand.
+
+[Inspect the underlying result](../../reports/monthly_sales.csv)
+
 ## Approach
 
 The source workbook has 541,909 transaction lines. The pipeline audits missing customer identifiers, exact duplicates, nonpositive prices, and negative quantities. It removes exact duplicates, separates negative-quantity transactions, and defines positive sales as positive quantity and price on non-cancellation invoices. Missing customer IDs remain in sales totals.

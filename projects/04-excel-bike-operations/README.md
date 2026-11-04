@@ -15,6 +15,12 @@ I used Excel SUMIFS formulas to aggregate daily rentals by month and checked the
 
 [See this code in context](../../projects/04-excel-bike-operations/build_workbook.mjs#L37) · [Inspect the results](../../projects/04-excel-bike-operations/verification.json)
 
+## Reading the figure
+
+The workbook aggregates trips, so the registered share of 81.17% describes trips taken by registered riders. One frequent rider can contribute many trips. The reconciled total of 3,292,679 checks the aggregation; it does not identify 3.29 million distinct riders.
+
+[Inspect the underlying result](../../projects/04-excel-bike-operations/bike_operations.xlsx)
+
 ## Excel skills demonstrated
 
 - Bounded `SUMIFS` and `COUNTIFS` with inclusive month starts and exclusive next-month boundaries.

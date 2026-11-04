@@ -14,6 +14,12 @@ I compared scikit-learn models using four expanding time windows. On the final c
 
 [See this code in context](../../run.py#L132) · [Inspect the results](../../reports/bike_metrics.csv)
 
+## Reading the figure
+
+The gap between the two lines is the daily prediction error. On 29 October 2012, the model predicted 3,169 rentals and only 22 occurred. The 725-rental average error hides misses of this size. The chart identifies a day to investigate but cannot explain why demand fell.
+
+[Inspect the underlying result](../../reports/bike_predictions.csv)
+
 ## Evaluation design
 
 The analysis uses all 731 daily observations, sorted by date. The first 80% are development data and the final 20% form an untouched chronological holdout during model selection. Four expanding-window folds compare a training-mean baseline, standardized Ridge regression, and histogram gradient boosting. The lowest mean validation MAE selects the model before final holdout evaluation. All model holdout scores are reported transparently; the winner is not reselected based on those scores.

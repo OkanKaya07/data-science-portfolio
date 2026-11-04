@@ -1,0 +1,8 @@
+sample,condition,type,count_sum,PC1,PC2
+untreated1,untreated,single-read,13972512,-11.7296,8.1695
+untreated2,untreated,single-read,21911438,-10.8137,6.0658
+untreated3,untreated,paired-end,8358426,-7.8179,-9.4932
+untreated4,untreated,paired-end,9841335,-8.1147,-8.9193
+treated1,treated,single-read,18670279,10.8499,14.4430
+treated2,treated,paired-end,9571826,13.7829,-3.8035
+treated3,treated,paired-end,10343856,13.8431,-6.4623

@@ -4,6 +4,16 @@
 
 The project uses real preprocessed microarray data distributed in Bioconductor's `multtest` package: **3,051 expression features × 38 tumor samples** (27 ALL, 11 AML). It is an exploratory reanalysis, not a diagnostic model.
 
+## What I built
+
+I used base R to compare expression across 38 samples. After Benjamini–Hochberg correction, 695 of 3,051 features had an adjusted p-value below 0.05. These are associations in one historical cohort.
+
+```r
+pca <- prcomp(t(x[selected,]),center=TRUE,scale.=TRUE)
+```
+
+[See this code in context](../../projects/06-r-bioinformatics/analyze.R#L33) · [Inspect the results](../../projects/06-r-bioinformatics/reports/summary.csv)
+
 ## Run
 
 From the repository root with R 4.5 or newer:

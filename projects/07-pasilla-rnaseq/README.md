@@ -2,6 +2,18 @@
 
 I asked whether gene expression differed between Pasilla knockdown and untreated cells, and whether sequencing layout could affect that comparison.
 
+## Step-by-step walkthrough
+
+1. **Align counts with sample labels.** I matched each Drosophila RNA-seq count column to its treatment and sequencing-layout annotation. Of 14,599 genes, 8,148 had at least ten counts in three or more libraries.
+2. **Normalize and compare samples.** I used pandas to calculate log2(1 + counts per million), then NumPy SVD on the 500 most variable genes. Sequencing layout remained visible in the sample metadata. [Open the implementation](analyze.py#L37-L43).
+
+![Source walkthrough showing the input, method and exact code excerpt](walkthrough/source.png)
+
+3. **Inspect the output.** Open [samples.csv](reports/samples.csv) and the [analysis figure](reports/pca.svg). The browser capture below shows values from that artifact.
+4. **Interpret the result.** PC1 (52.6%) separates the three knockdown libraries from the four controls. PC2 (32.1%) separates read layouts. Both patterns matter when interpreting a gene-level comparison in seven samples.
+
+![Output walkthrough showing measured values and their interpretation](walkthrough/result.png)
+
 ## Data and method
 
 I used the [Bioconductor pasilla gene counts and sample annotations](https://github.com/bioc/pasilla/tree/3c91e8df8add3549129e46b7a7a078fda4e2755a/inst/extdata) from the Brooks et al. experiment. The inputs are gene-level counts, already aligned and summarized. There are four untreated libraries and three knockdown libraries. Both groups include single-read and paired-end libraries.

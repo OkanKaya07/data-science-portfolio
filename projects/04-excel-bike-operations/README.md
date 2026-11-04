@@ -4,16 +4,18 @@
 
 Download [bike_operations.xlsx](bike_operations.xlsx) and open it in Excel. The workbook contains 731 daily source records and a formula-driven monthly report with a native editable line chart. Source counts stay numeric, dates are Excel dates, the source is filterable, and its headers are frozen.
 
-## What I built
+## Step-by-step walkthrough
 
-I used Excel SUMIFS formulas to aggregate daily rentals by month and checked the report against its source. The totals matched across 731 days and 3,292,679 rentals, with a reconciliation difference of zero.
+1. **Inspect the daily source.** I used the UCI Bike Sharing daily records to build an editable workbook. I kept the month, user type and trip counts so each monthly number could be traced back to daily rows.
+2. **Aggregate within month boundaries.** I used COUNTIFS to count days and SUMIFS to add casual and registered rentals. The end of each interval is the start of the next month, preventing double counting. [Open the implementation](build_workbook.mjs#L34-L41).
 
-```javascript
-  `=SUMIFS('Daily source'!$D$6:$D${end},${criteria})`,
-  `=SUMIFS('Daily source'!$E$6:$E${end},${criteria})`,
-```
+![Source walkthrough showing the input, method and exact code excerpt](walkthrough/source.png)
 
-[See this code in context](../../projects/04-excel-bike-operations/build_workbook.mjs#L37) · [Inspect the results](../../projects/04-excel-bike-operations/verification.json)
+3. **Inspect the output.** Open [bike_operations.xlsx](bike_operations.xlsx). The browser capture below shows values from that artifact as a worksheet extract.
+4. **Interpret the result.** January 2011 contains 3,073 casual and 35,116 registered trips, adding to 38,189. Registered trips account for 91.95% that month. This measures trips, not distinct riders.
+
+![Output walkthrough showing measured values and their interpretation](walkthrough/result.png)
+
 
 ## Reading the figure
 

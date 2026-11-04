@@ -2,6 +2,16 @@
 
 **Decision:** Where should a retailer focus performance monitoring and commercial investigation?
 
+## What I built
+
+I used pandas to separate cancelled invoices and nonpositive lines before loading sales into SQLite. Of 541,909 source lines, 524,878 qualified as positive sales, totaling £10.64 million. This measures gross positive sales before returns.
+
+```python
+    sales = frame[(frame.Quantity > 0) & (frame.UnitPrice > 0) & ~frame.InvoiceNo.str.upper().str.startswith('C')].copy()
+```
+
+[See this code in context](../../run.py#L73) · [Inspect the results](../../reports/retail_audit.json)
+
 ## Approach
 
 The source workbook has 541,909 transaction lines. The pipeline audits missing customer identifiers, exact duplicates, nonpositive prices, and negative quantities. It removes exact duplicates, separates negative-quantity transactions, and defines positive sales as positive quantity and price on non-cancellation invoices. Missing customer IDs remain in sales totals.

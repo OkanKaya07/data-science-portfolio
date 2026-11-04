@@ -2,6 +2,18 @@
 
 **Decision:** How much daily demand variation can calendar and weather explain?
 
+## What I built
+
+I compared scikit-learn models using four expanding time windows. On the final chronological holdout, gradient boosting missed by 725 rentals per day on average, compared with 2,290 for the training-mean baseline. The estimate uses observed weather.
+
+```python
+        for fold,(train,val) in enumerate(TimeSeriesSplit(n_splits=4).split(Xdev)):
+            model.fit(Xdev.iloc[train],ydev.iloc[train])
+            pred = model.predict(Xdev.iloc[val])
+```
+
+[See this code in context](../../run.py#L132) · [Inspect the results](../../reports/bike_metrics.csv)
+
 ## Evaluation design
 
 The analysis uses all 731 daily observations, sorted by date. The first 80% are development data and the final 20% form an untouched chronological holdout during model selection. Four expanding-window folds compare a training-mean baseline, standardized Ridge regression, and histogram gradient boosting. The lowest mean validation MAE selects the model before final holdout evaluation. All model holdout scores are reported transparently; the winner is not reselected based on those scores.

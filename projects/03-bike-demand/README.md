@@ -2,6 +2,18 @@
 
 **Decision:** How much daily demand variation can calendar and weather explain?
 
+## Step-by-step walkthrough
+
+1. **Hold out the most recent dates.** I sorted 731 UCI Bike Sharing days by date and reserved the final fifth for evaluation. I excluded casual and registered counts because their sum gives away the target.
+2. **Validate forward in time.** I used scikit-learn TimeSeriesSplit on the earlier dates, fit each model using past observations and scored it on the following window. I chose the model before opening the final holdout. [Open the implementation](../../run.py#L132-L136).
+
+![Source walkthrough showing the input, method and exact code excerpt](walkthrough/source.png)
+
+3. **Inspect the output.** Open [bike_metrics.csv](../../reports/bike_metrics.csv) and the [analysis figure](../../reports/bike_holdout.png). The browser capture below shows values from that artifact.
+4. **Interpret the result.** Gradient boosting averaged 725 rentals of absolute error per day versus 2,290 for the training-mean baseline. Large gaps between lines are individual misses. Weather was observed the same day.
+
+![Output walkthrough showing measured values and their interpretation](walkthrough/result.png)
+
 ## What I built
 
 I compared scikit-learn models using four expanding time windows. On the final chronological holdout, gradient boosting missed by 725 rentals per day on average, compared with 2,290 for the training-mean baseline. The estimate uses observed weather.

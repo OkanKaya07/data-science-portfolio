@@ -4,6 +4,18 @@
 
 The project uses real preprocessed microarray data distributed in Bioconductor's `multtest` package: **3,051 expression features × 38 tumor samples** (27 ALL, 11 AML). It is an exploratory reanalysis, not a diagnostic model.
 
+## Step-by-step walkthrough
+
+1. **Check the expression matrix.** I loaded the preprocessed Golub microarray data and verified 3,051 features across 38 tumors. I treated the ALL and AML labels as sample groups, keeping their identities out of the PCA feature selection.
+2. **Build an unsupervised view.** I used base R to select the 500 most variable features, then centered and scaled them with prcomp. In a separate analysis I compared ALL and AML with Welch tests and adjusted the p-values for multiple testing. [Open the implementation](analyze.R#L32-L35).
+
+![Source walkthrough showing the input, method and exact code excerpt](walkthrough/source.png)
+
+3. **Inspect the output.** Open [summary.csv](reports/summary.csv) and the [analysis figure](reports/pca.png). The browser capture below shows values from that artifact.
+4. **Interpret the result.** PC1 and PC2 together explain 32.38% of variation among the selected features. Nearby points are samples with similar profiles in these two dimensions. The separate tests yielded 695 adjusted hits in this cohort.
+
+![Output walkthrough showing measured values and their interpretation](walkthrough/result.png)
+
 ## What I built
 
 I used base R to compare expression across 38 samples. After Benjamini–Hochberg correction, 695 of 3,051 features had an adjusted p-value below 0.05. These are associations in one historical cohort.

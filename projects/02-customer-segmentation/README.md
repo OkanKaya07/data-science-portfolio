@@ -2,6 +2,18 @@
 
 **Decision:** Can purchase behavior support differentiated retention experiments?
 
+## Step-by-step walkthrough
+
+1. **Build a customer-level table.** I kept identified customers and used pandas to calculate days since the last purchase, distinct orders and total positive spend. Anonymous sales cannot be attributed to a customer.
+2. **Make the three measures comparable.** I applied log1p and StandardScaler before scikit-learn K-means. Otherwise large monetary values could dominate the distance calculation. [Open the implementation](../../run.py#L92-L98).
+
+![Source walkthrough showing the input, method and exact code excerpt](walkthrough/source.png)
+
+3. **Inspect the output.** Open [segment_profiles.csv](../../reports/segment_profiles.csv) and the [analysis figure](../../reports/customer_segments.png). The browser capture below shows values from that artifact.
+4. **Interpret the result.** The 1,652-customer group had a median of six orders and accounted for 84.95% of identified-customer sales. The horizontal and vertical axes show recency and spend. Frequency also informed clustering.
+
+![Output walkthrough showing measured values and their interpretation](walkthrough/result.png)
+
 ## What I built
 
 I used pandas to build customer purchase histories and scikit-learn to group them by recency, frequency and spend. One segment of 1,652 customers accounted for 84.95% of positive sales among identified customers. That makes it a candidate for a retention experiment.

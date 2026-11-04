@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" role="img"><title>Sample PCA of Pasilla RNA-seq counts</title><rect width="760" height="420" fill="white"/>
+<g font-family="sans-serif" fill="#1e293b"><text x="50" y="30" font-size="21">Pasilla RNA-seq | sample PCA</text>
+<text x="50" y="55">Blue: untreated � Orange: knockdown � Circles: single-read � Squares: paired-end</text>
+<path d="M55 80V355H710" stroke="#64748b" fill="none"/>
+<text x="310" y="398">PC1 (52.6%)</text><text x="19" y="250" transform="rotate(-90 19 250)">PC2 (32.1%)</text>
+<circle cx="100.0" cy="166.34993707176682" r="5" fill="#245d89"/><text x="108.0" y="160.34993707176682" font-size="12">untreated1</text>
+<circle cx="119.1610247676467" cy="185.24617788576128" r="5" fill="#245d89"/><text x="127.1610247676467" y="179.24617788576128" font-size="12">untreated2</text>
+<rect x="176.83509307380479" y="320.0" width="10" height="10" fill="#245d89"/><text x="189.83509307380479" y="319.0" font-size="12">untreated3</text>
+<rect x="170.62490603210762" y="314.8443884324999" width="10" height="10" fill="#245d89"/><text x="183.62490603210762" y="313.8443884324999" font-size="12">untreated4</text>
+<circle cx="572.3795061386344" cy="110.0" r="5" fill="#a84219"/><text x="580.3795061386344" y="104.0" font-size="12">treated1</text>
+<rect x="628.7404318662174" y="268.89373506792424" width="10" height="10" fill="#a84219"/><text x="641.7404318662174" y="267.89373506792424" font-size="12">treated2</text>
+<rect x="630.0" y="292.7757221046211" width="10" height="10" fill="#a84219"/><text x="643.0" y="291.7757221046211" font-size="12">treated3</text>
+</g></svg>

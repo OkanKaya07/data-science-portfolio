@@ -16,6 +16,12 @@ I used Python’s csv and sqlite3 modules to load sensor readings and handle mis
 
 [See this code in context](../../projects/05-python-air-quality/air_quality.py#L33) · [Inspect the results](../../projects/05-python-air-quality/reports/quality_report.json)
 
+## Reading the output
+
+On 10 March 2004, six observed hours averaged 1.97 mg/m³ CO. The coverage-qualified field is blank because the day falls short of 18 valid hours. On 11 March, 23 valid hours support reporting 2.24 mg/m³. A blank therefore means insufficient coverage, not clean air.
+
+[Inspect the underlying result](../../projects/05-python-air-quality/reports/daily_summary.csv)
+
 ## Run
 
 From the repository root, with Python 3.12:

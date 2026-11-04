@@ -12,6 +12,12 @@ I used pandas to build customer purchase histories and scikit-learn to group the
 
 [See this code in context](../../run.py#L92) · [Inspect the results](../../reports/segment_profiles.csv)
 
+## Reading the figure
+
+Each dot represents a customer. Moving right means more days since the last purchase, and moving up means higher historical spend on a log scale. The higher-spend group had a median of six orders versus one in the other group. Frequency helped form the clusters even though it is absent from the chart axes.
+
+[Inspect the underlying result](../../reports/segment_profiles.csv)
+
 ## Approach
 
 Known customers from the cleaned positive-sales table are aggregated into recency (days from the analysis snapshot), frequency (distinct invoices), and monetary value (GBP). Anonymous orders cannot be assigned to a customer and are excluded here. The snapshot is one day after the final observed sales date, making the analysis reproducible.

@@ -14,6 +14,12 @@ pca <- prcomp(t(x[selected,]),center=TRUE,scale.=TRUE)
 
 [See this code in context](../../projects/06-r-bioinformatics/analyze.R#L33) · [Inspect the results](../../projects/06-r-bioinformatics/reports/summary.csv)
 
+## Reading the figure
+
+Each PCA point represents one tumor. PC1 and PC2 together account for 32.38% of variation across the 500 selected features, so distance on this plot shows only part of the expression difference. In the feature comparison, a positive AML-minus-ALL difference means higher average expression in AML in this cohort. The 695 adjusted hits are features, not 695 independent biomarkers.
+
+[Inspect the underlying result](../../projects/06-r-bioinformatics/reports/summary.csv)
+
 ## Run
 
 From the repository root with R 4.5 or newer:

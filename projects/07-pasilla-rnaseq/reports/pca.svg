@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" role="img"><title>Sample PCA of Pasilla RNA-seq counts</title><rect width="760" height="420" fill="white"/>
 <g font-family="sans-serif" fill="#1e293b"><text x="50" y="30" font-size="21">Pasilla RNA-seq | sample PCA</text>
-<text x="50" y="55">Blue: untreated � Orange: knockdown � Circles: single-read � Squares: paired-end</text>
+<text x="50" y="55">Blue: untreated · Orange: knockdown · Circles: single-read · Squares: paired-end</text>
 <path d="M55 80V355H710" stroke="#64748b" fill="none"/>
 <text x="310" y="398">PC1 (52.6%)</text><text x="19" y="250" transform="rotate(-90 19 250)">PC2 (32.1%)</text>
 <circle cx="100.0" cy="166.34993707176682" r="5" fill="#245d89"/><text x="108.0" y="160.34993707176682" font-size="12">untreated1</text>

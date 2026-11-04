@@ -2,6 +2,16 @@
 
 **Decision:** Can purchase behavior support differentiated retention experiments?
 
+## What I built
+
+I used pandas to build customer purchase histories and scikit-learn to group them by recency, frequency and spend. One segment of 1,652 customers accounted for 84.95% of positive sales among identified customers. That makes it a candidate for a retention experiment.
+
+```python
+    scaled = StandardScaler().fit_transform(np.log1p(rfm[features]))
+```
+
+[See this code in context](../../run.py#L92) · [Inspect the results](../../reports/segment_profiles.csv)
+
 ## Approach
 
 Known customers from the cleaned positive-sales table are aggregated into recency (days from the analysis snapshot), frequency (distinct invoices), and monetary value (GBP). Anonymous orders cannot be assigned to a customer and are excluded here. The snapshot is one day after the final observed sales date, making the analysis reproducible.

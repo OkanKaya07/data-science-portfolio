@@ -1,6 +1,8 @@
 # Data Analytics & Machine Learning Portfolio
 
-Seven projects built from real UCI and Bioconductor data. They cover data analysis, machine learning, Excel, Python application development, and R bioinformatics. Each connects a question to reproducible code, measured results, and limitations.
+I’m Okan, an Industrial Mathematics MSc student at TU Dortmund. This repository brings together seven projects around data analysis, Python, Excel and bioinformatics.
+
+Each project page explains the data, shows the relevant code and walks through the results. The screenshots provide a quick way to follow the analysis. You can also open the output files and run the scripts.
 
 | Project | Question | Methods | Walkthrough |
 |---|---|---|---|
@@ -47,6 +49,6 @@ These two datasets are distributed by UCI under CC BY 4.0. Derived data and char
 
 ## Portfolio notes
 
-Prepared with AI assistance. Results come from executable analysis, not claimed production deployments. Suggested business actions are hypotheses for validation; no revenue uplift or causal effect is asserted.
+These projects were developed with AI assistance in coding and documentation. The linked scripts, datasets and output files document how the results were produced.
 
 Türkçe: Bu repo gerçek verilerle hazırlanmış yedi proje içerir. Excel, Python, SQL, makine öğrenmesi ve R biyoinformatik çalışmalarında yöntemler, sonuçlar ve sınırlamalar İngilizce açıklanmıştır.

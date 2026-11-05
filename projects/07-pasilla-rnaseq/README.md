@@ -1,6 +1,6 @@
-# Pasilla knockdown RNA-seq in Drosophila cells
+# Exploring Pasilla RNA-seq counts
 
-I asked whether gene expression differed between Pasilla knockdown and untreated cells, and whether sequencing layout could affect that comparison.
+This analysis compares three Pasilla knockdown libraries with four controls. It also checks how single-read and paired-end sequencing relate to the sample differences.
 
 ## Step-by-step walkthrough
 
@@ -9,7 +9,7 @@ I asked whether gene expression differed between Pasilla knockdown and untreated
 
 ![Source walkthrough showing the input, method and exact code excerpt](walkthrough/source.png)
 
-3. **Inspect the output.** Open [samples.csv](reports/samples.csv) and the [analysis figure](reports/pca.svg). The browser capture below shows values from that artifact.
+3. **Inspect the output.** Open [samples.csv](reports/samples.csv) and the [analysis figure](reports/pca.svg). The screenshot puts the saved output beside a short explanation.
 4. **Interpret the result.** PC1 (52.6%) separates the three knockdown libraries from the four controls. PC2 (32.1%) separates read layouts. Both patterns matter when interpreting a gene-level comparison in seven samples.
 
 ![Output walkthrough showing measured values and their interpretation](walkthrough/result.png)
@@ -22,9 +22,6 @@ I used **pandas** to match sample identifiers, inspect library sizes, and retain
 
 ![Sample PCA with condition shown by color and sequencing layout by shape](reports/pca.svg)
 
-## What the figure tells us
-
-Each point is one library. Along PC1 (52.6%), all three knockdown samples sit apart from the four controls. Along PC2 (32.1%), the single-read samples sit apart from the paired-end samples. Both condition and sequencing layout matter when reading these seven samples. The first two axes together capture 84.7% of variation among these 500 genes. This pattern motivates including layout in the gene comparison. PCA does not establish which genes respond directly to knockdown.
 
 ## What the gene comparison tells us
 

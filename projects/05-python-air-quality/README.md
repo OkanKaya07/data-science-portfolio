@@ -1,8 +1,6 @@
-# 05 · Air-quality data engineering CLI
+# Cleaning air-quality sensor data
 
-**Question:** Can messy sensor CSV data be turned into a validated, repeatable analytical dataset?
-
-This Python application demonstrates programming beyond a notebook: immutable dataclasses, type hints, schema validation, localized number parsing, meaningful exceptions, command-line configuration, logging, atomic database replacement, SQL aggregation, provenance hashes, and unit tests. It uses the Python standard library only.
+This is a small Python command-line application for turning a sensor CSV into daily summaries. The difficult parts of the input are decimal commas, missing-value markers and days with too few readings.
 
 ## Step-by-step walkthrough
 
@@ -11,28 +9,10 @@ This Python application demonstrates programming beyond a notebook: immutable da
 
 ![Source walkthrough showing the input, method and exact code excerpt](walkthrough/source.png)
 
-3. **Inspect the output.** Open [daily_summary.csv](reports/daily_summary.csv). The browser capture below shows values from that artifact.
+3. **Inspect the output.** Open [daily_summary.csv](reports/daily_summary.csv). The screenshot puts the saved output beside a short explanation.
 4. **Interpret the result.** On 10 March the six valid readings averaged 1.97 mg/m³, but the coverage-qualified field is blank. On 11 March there were 23 valid hours, so the qualified average is 2.24 mg/m³.
 
 ![Output walkthrough showing measured values and their interpretation](walkthrough/result.png)
-
-## What I built
-
-I used Python’s csv and sqlite3 modules to load sensor readings and handle missing values explicitly. Of 9,357 hourly records, 1,683 lacked a CO reading. Preserving missing readings keeps them from artificially lowering daily averages.
-
-```python
-    parsed = float(value.replace(',', '.'))
-    if parsed == -200:
-        return None
-```
-
-[See this code in context](../../projects/05-python-air-quality/air_quality.py#L33) · [Inspect the results](../../projects/05-python-air-quality/reports/quality_report.json)
-
-## Reading the output
-
-On 10 March 2004, six observed hours averaged 1.97 mg/m³ CO. The coverage-qualified field is blank because the day falls short of 18 valid hours. On 11 March, 23 valid hours support reporting 2.24 mg/m³. A blank therefore means insufficient coverage, not clean air.
-
-[Inspect the underlying result](../../projects/05-python-air-quality/reports/daily_summary.csv)
 
 ## Run
 

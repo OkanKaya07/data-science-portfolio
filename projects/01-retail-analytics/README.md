@@ -1,6 +1,6 @@
-# 01 · Retail sales analytics
+# Retail sales with Python and SQL
 
-**Decision:** Where should a retailer focus performance monitoring and commercial investigation?
+This project follows a retail dataset from invoice lines to monthly sales totals. The main question is how much of a change comes from order volume and how much comes from average order value.
 
 ## Step-by-step walkthrough
 
@@ -9,26 +9,10 @@
 
 ![Source walkthrough showing the input, method and exact code excerpt](walkthrough/source.png)
 
-3. **Inspect the output.** Open [monthly_sales.csv](../../reports/monthly_sales.csv) and the [analysis figure](../../reports/retail_monthly.png). The browser capture below shows values from that artifact.
+3. **Inspect the output.** Open [monthly_sales.csv](../../reports/monthly_sales.csv) and the [analysis figure](../../reports/retail_monthly.png). The screenshot puts the saved output beside a short explanation.
 4. **Interpret the result.** November 2011 reached £1.50m across 2,769 invoices. December includes only nine days, so the last bar cannot establish a fall in demand.
 
 ![Output walkthrough showing measured values and their interpretation](walkthrough/result.png)
-
-## What I built
-
-I used pandas to separate cancelled invoices and nonpositive lines before loading sales into SQLite. Of 541,909 source lines, 524,878 qualified as positive sales, totaling £10.64 million. This measures gross positive sales before returns.
-
-```python
-    sales = frame[(frame.Quantity > 0) & (frame.UnitPrice > 0) & ~frame.InvoiceNo.str.upper().str.startswith('C')].copy()
-```
-
-[See this code in context](../../run.py#L73) · [Inspect the results](../../reports/retail_audit.json)
-
-## Reading the figure
-
-Each bar adds up eligible invoice lines for one month. November 2011 reached £1.50m across 2,769 orders, up 30.6% from October. December’s much shorter bar covers only nine days, so it cannot establish a fall in demand.
-
-[Inspect the underlying result](../../reports/monthly_sales.csv)
 
 ## Approach
 
@@ -48,6 +32,4 @@ SQLite queries aggregate invoices into monthly sales, orders, average order valu
 
 ## Interpretation and next steps
 
-December 2011 ends on the ninth and must not be treated as a full-month decline. The first and last months also have incomplete customer observation windows. Negative quantities are audited separately and cannot automatically be interpreted as matched refunds. Investigate large orders and non-product stock codes before building a production revenue dashboard. Add product classifications, return matching, and margin data before recommending budget changes.
-
-**Interview discussion:** Why count distinct invoices rather than rows? Why retain anonymous orders in aggregate KPIs? How would you handle a partial month in an executive report?
+The first and last months also have incomplete customer observation windows. Negative quantities are audited separately and cannot automatically be interpreted as matched refunds. Investigate large orders and non-product stock codes before building a production revenue dashboard. Add product classifications, return matching, and margin data before recommending budget changes.

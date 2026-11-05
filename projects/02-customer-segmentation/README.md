@@ -1,6 +1,6 @@
-# 02 · RFM customer segmentation
+# Customer groups from purchase history
 
-**Decision:** Can purchase behavior support differentiated retention experiments?
+This analysis groups 4,338 customers by how recently they ordered, how often they ordered and how much they spent. The useful part is comparing the resulting profiles and deciding what would need testing before acting on them.
 
 ## Step-by-step walkthrough
 
@@ -9,26 +9,10 @@
 
 ![Source walkthrough showing the input, method and exact code excerpt](walkthrough/source.png)
 
-3. **Inspect the output.** Open [segment_profiles.csv](../../reports/segment_profiles.csv) and the [analysis figure](../../reports/customer_segments.png). The browser capture below shows values from that artifact.
+3. **Inspect the output.** Open [segment_profiles.csv](../../reports/segment_profiles.csv) and the [analysis figure](../../reports/customer_segments.png). The screenshot puts the saved output beside a short explanation.
 4. **Interpret the result.** The 1,652-customer group had a median of six orders and accounted for 84.95% of identified-customer sales. The horizontal and vertical axes show recency and spend. Frequency also informed clustering.
 
 ![Output walkthrough showing measured values and their interpretation](walkthrough/result.png)
-
-## What I built
-
-I used pandas to build customer purchase histories and scikit-learn to group them by recency, frequency and spend. One segment of 1,652 customers accounted for 84.95% of positive sales among identified customers. That makes it a candidate for a retention experiment.
-
-```python
-    scaled = StandardScaler().fit_transform(np.log1p(rfm[features]))
-```
-
-[See this code in context](../../run.py#L92) · [Inspect the results](../../reports/segment_profiles.csv)
-
-## Reading the figure
-
-Each dot represents a customer. Moving right means more days since the last purchase, and moving up means higher historical spend on a log scale. The higher-spend group had a median of six orders versus one in the other group. Frequency helped form the clusters even though it is absent from the chart axes.
-
-[Inspect the underlying result](../../reports/segment_profiles.csv)
 
 ## Approach
 
@@ -50,5 +34,3 @@ Segment IDs are arbitrary. Interpret them through median recency, order frequenc
 ## Business use and limitations
 
 Test retention messaging for high-value customers, onboarding for recent low-frequency buyers, and win-back messaging for inactive customers only after inspecting the profiles. Use randomized experiments to measure incremental value. Historical spend is not lifetime value, and low recency alone does not prove churn. Results depend on a limited historical window, outliers, wholesale customers, and exclusion of returns. Compare alternative scaling, return-adjusted values, and month-to-month stability before deployment.
-
-**Interview discussion:** Why transform before scaling? What does silhouette fail to establish? How would you validate whether a segment changes over time?

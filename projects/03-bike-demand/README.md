@@ -1,6 +1,6 @@
-# 03 · Time-aware bike demand modeling
+# Estimating daily bike rentals
 
-**Decision:** How much daily demand variation can calendar and weather explain?
+This project compares a simple baseline, Ridge regression and gradient boosting on two years of bike rental data. Keeping later dates out of model selection is the main focus.
 
 ## Step-by-step walkthrough
 
@@ -9,28 +9,10 @@
 
 ![Source walkthrough showing the input, method and exact code excerpt](walkthrough/source.png)
 
-3. **Inspect the output.** Open [bike_metrics.csv](../../reports/bike_metrics.csv) and the [analysis figure](../../reports/bike_holdout.png). The browser capture below shows values from that artifact.
+3. **Inspect the output.** Open [bike_metrics.csv](../../reports/bike_metrics.csv) and the [analysis figure](../../reports/bike_holdout.png). The screenshot puts the saved output beside a short explanation.
 4. **Interpret the result.** Gradient boosting averaged 725 rentals of absolute error per day versus 2,290 for the training-mean baseline. Large gaps between lines are individual misses. Weather was observed the same day.
 
 ![Output walkthrough showing measured values and their interpretation](walkthrough/result.png)
-
-## What I built
-
-I compared scikit-learn models using four expanding time windows. On the final chronological holdout, gradient boosting missed by 725 rentals per day on average, compared with 2,290 for the training-mean baseline. The estimate uses observed weather.
-
-```python
-        for fold,(train,val) in enumerate(TimeSeriesSplit(n_splits=4).split(Xdev)):
-            model.fit(Xdev.iloc[train],ydev.iloc[train])
-            pred = model.predict(Xdev.iloc[val])
-```
-
-[See this code in context](../../run.py#L132) · [Inspect the results](../../reports/bike_metrics.csv)
-
-## Reading the figure
-
-The gap between the two lines is the daily prediction error. On 29 October 2012, the model predicted 3,169 rentals and only 22 occurred. The 725-rental average error hides misses of this size. The chart identifies a day to investigate but cannot explain why demand fell.
-
-[Inspect the underlying result](../../reports/bike_predictions.csv)
 
 ## Evaluation design
 
@@ -52,5 +34,3 @@ Inputs include a calendar trend, cyclical annual features, holidays, working-day
 - [Measured findings](../../reports/FINDINGS.md)
 
 MAE is interpretable as average absolute daily rental error. RMSE emphasizes large misses; negative R² can reveal poor extrapolation. Permutation importance measures predictive sensitivity, not causality. Correlated weather and seasonal features complicate interpretation. The dataset contains only two years from one city, and the final holdout covers a particular season. Extend to rolling seasonal backtests and compare operational lag baselines before using the model for staffing or inventory decisions.
-
-**Interview discussion:** Why avoid random splits? Why can tree models struggle with a growing trend? What would change for a genuine day-ahead forecast?

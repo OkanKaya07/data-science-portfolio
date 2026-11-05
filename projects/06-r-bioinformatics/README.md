@@ -1,8 +1,6 @@
-# 06 · Leukemia expression analysis in R
+# Exploring leukemia expression data in R
 
-**Research question:** Which supplied expression features differ between ALL and AML in the historical Golub study, and what structure appears without using the class labels?
-
-The project uses real preprocessed microarray data distributed in Bioconductor's `multtest` package: **3,051 expression features × 38 tumor samples** (27 ALL, 11 AML). It is an exploratory reanalysis, not a diagnostic model.
+This project compares ALL and AML samples in the historical Golub dataset. It combines an overview of sample variation with a separate comparison of individual expression features.
 
 ## Step-by-step walkthrough
 
@@ -11,26 +9,10 @@ The project uses real preprocessed microarray data distributed in Bioconductor's
 
 ![Source walkthrough showing the input, method and exact code excerpt](walkthrough/source.png)
 
-3. **Inspect the output.** Open [summary.csv](reports/summary.csv) and the [analysis figure](reports/pca.png). The browser capture below shows values from that artifact.
+3. **Inspect the output.** Open [summary.csv](reports/summary.csv) and the [analysis figure](reports/pca.png). The screenshot puts the saved output beside a short explanation.
 4. **Interpret the result.** PC1 and PC2 together explain 32.38% of variation among the selected features. Nearby points are samples with similar profiles in these two dimensions. The separate tests yielded 695 adjusted hits in this cohort.
 
 ![Output walkthrough showing measured values and their interpretation](walkthrough/result.png)
-
-## What I built
-
-I used base R to compare expression across 38 samples. After Benjamini–Hochberg correction, 695 of 3,051 features had an adjusted p-value below 0.05. These are associations in one historical cohort.
-
-```r
-pca <- prcomp(t(x[selected,]),center=TRUE,scale.=TRUE)
-```
-
-[See this code in context](../../projects/06-r-bioinformatics/analyze.R#L33) · [Inspect the results](../../projects/06-r-bioinformatics/reports/summary.csv)
-
-## Reading the figure
-
-Each PCA point represents one tumor. PC1 and PC2 together account for 32.38% of variation across the 500 selected features, so distance on this plot shows only part of the expression difference. In the feature comparison, a positive AML-minus-ALL difference means higher average expression in AML in this cohort. The 695 adjusted hits are features, not 695 independent biomarkers.
-
-[Inspect the underlying result](../../projects/06-r-bioinformatics/reports/summary.csv)
 
 ## Run
 

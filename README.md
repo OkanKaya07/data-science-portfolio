@@ -1,18 +1,38 @@
-# Data Analytics & Machine Learning Portfolio
+# Hi, I’m Okan 👋
 
-I’m Okan, an Industrial Mathematics MSc student at TU Dortmund. This repository brings together seven projects around data analysis, Python, Excel and bioinformatics.
+I’m studying Industrial Mathematics at TU Dortmund. My interests are data analysis, machine learning and bioinformatics, with mathematics as the common starting point.
 
-Each project page explains the data, shows the relevant code and walks through the results. The screenshots provide a quick way to follow the analysis. You can also open the output files and run the scripts.
+I graduated first in Mathematics at Yeditepe University and am looking for a working student role around Dortmund.
 
-| Project | Question | Methods | Walkthrough |
+[Portfolio website](https://okankaya07.github.io/) · [LinkedIn](https://www.linkedin.com/in/okan-kaya-708a2a279) · [Email](mailto:okankaya0207@gmail.com)
+
+## Start here
+
+These three projects offer different ways into my work. Each page includes the data, code, output and an explanation of the result.
+
+<table>
+<tr>
+<td width="33%" valign="top"><a href="projects/01-retail-analytics/README.md"><strong>Retail sales · Python &amp; SQL</strong></a><br><a href="projects/01-retail-analytics/README.md"><img src="reports/retail_monthly.png" alt="Monthly positive retail sales" width="280"></a><br>From 541,909 invoice lines to monthly sales, order counts and average order value.</td>
+<td width="33%" valign="top"><a href="projects/03-bike-demand/README.md"><strong>Bike demand · Machine learning</strong></a><br><a href="projects/03-bike-demand/README.md"><img src="reports/bike_holdout.png" alt="Observed and estimated rentals on held-out dates" width="280"></a><br>Three models compared using chronological validation. Holdout MAE of 725 rentals for the selected model.</td>
+<td width="33%" valign="top"><a href="projects/07-pasilla-rnaseq/README.md"><strong>Pasilla · RNA-seq exploration</strong></a><br><a href="projects/07-pasilla-rnaseq/README.md"><img src="projects/07-pasilla-rnaseq/reports/pca.svg" alt="PCA of seven RNA-seq libraries" width="280"></a><br>A sample comparison that considers both knockdown status and sequencing layout.</td>
+</tr>
+</table>
+
+## Projects
+
+| Project | Tools | What to look for | Open |
 |---|---|---|---|
-| Retail analytics | How do sales, order value, and geographic concentration change? | Python ETL, SQLite CTEs, window functions, data-quality audit | [Case study](projects/01-retail-analytics/README.md) |
-| Customer segmentation | Which customers have similar purchase behavior? | RFM, log transform, standardization, K-means, silhouette, seed stability | [Case study](projects/02-customer-segmentation/README.md) |
-| Bike demand modeling | How well can calendar and observed weather explain daily demand? | Chronological holdout, expanding-window CV, baseline, Ridge, gradient boosting, permutation importance | [Case study](projects/03-bike-demand/README.md) |
-| Excel operations report | How does rental volume and rider mix change by month? | SUMIFS, COUNTIFS, EDATE, reconciliation, native chart | [Workbook and guide](projects/04-excel-bike-operations/README.md) |
-| Python air-quality CLI | How can messy sensor records be loaded reliably? | Dataclasses, type hints, validation, logging, transactions, SQLite, tests | [Application](projects/05-python-air-quality/README.md) |
-| R bioinformatics | Which expression features differ between leukemia groups? | Welch tests, BH correction, PCA, reproducible base-R pipeline | [Research analysis](projects/06-r-bioinformatics/README.md) |
-| Pasilla knockdown RNA-seq | How do condition and sequencing layout relate to sample variation? | pandas count filtering, log-CPM, NumPy PCA and layout-adjusted contrasts | [Analysis and figure](projects/07-pasilla-rnaseq/README.md) |
+| [Retail sales](projects/01-retail-analytics/README.md) | Python · pandas · SQLite · Matplotlib | Monthly positive sales and order counts | [Code](sql/retail.sql) · [Output](reports/monthly_sales.csv) |
+| [Customer segmentation](projects/02-customer-segmentation/README.md) | Python · pandas · NumPy · scikit-learn | Compare recency, frequency and spend | [Code](run.py) · [Output](reports/segment_profiles.csv) |
+| [Bike rental demand](projects/03-bike-demand/README.md) | Python · pandas · scikit-learn · Matplotlib | Evaluate demand estimates on later dates | [Code](run.py) · [Output](reports/bike_metrics.csv) |
+| [Excel operations](projects/04-excel-bike-operations/README.md) | Excel · SUMIFS · COUNTIFS · JavaScript | Reconcile monthly rentals with daily records | [Code](projects/04-excel-bike-operations/build_workbook.mjs) · [Output](projects/04-excel-bike-operations/bike_operations.xlsx) |
+| [Air-quality pipeline](projects/05-python-air-quality/README.md) | Python standard library · SQLite · unittest | Keep missing readings visible in daily summaries | [Code](projects/05-python-air-quality/air_quality.py) · [Output](projects/05-python-air-quality/reports/daily_summary.csv) |
+| [Leukemia expression](projects/06-r-bioinformatics/README.md) | Base R · Welch tests · PCA | Explore variation across 38 tumor samples | [Code](projects/06-r-bioinformatics/analyze.R) · [Output](projects/06-r-bioinformatics/reports/summary.csv) |
+| [Pasilla RNA-seq](projects/07-pasilla-rnaseq/README.md) | Python · pandas · NumPy | Compare condition and read-layout patterns | [Code](projects/07-pasilla-rnaseq/analyze.py) · [Output](projects/07-pasilla-rnaseq/reports/samples.csv) |
+
+## About my studies
+
+My current courses cover deep learning, optimization, simulation techniques and numerical methods. My mathematics degree included a Python project on fractals. I also completed preparatory biotechnology coursework, which connects to the expression-data projects here.
 
 ## Run locally
 

@@ -1,5 +1,9 @@
 # Exploring leukemia expression data in R
 
+[← All projects](../../README.md#projects) · [Source code](analyze.R) · [Results](reports/summary.csv)
+
+**Tools** · Base R · Welch tests · PCA
+
 This project compares ALL and AML samples in the historical Golub dataset. It combines an overview of sample variation with a separate comparison of individual expression features.
 
 ## Step-by-step walkthrough
@@ -7,7 +11,19 @@ This project compares ALL and AML samples in the historical Golub dataset. It co
 1. **Check the expression matrix.** I loaded the preprocessed Golub microarray data and verified 3,051 features across 38 tumors. I treated the ALL and AML labels as sample groups, keeping their identities out of the PCA feature selection.
 2. **Build an unsupervised view.** I used base R to select the 500 most variable features, then centered and scaled them with prcomp. In a separate analysis I compared ALL and AML with Welch tests and adjusted the p-values for multiple testing. [Open the implementation](analyze.R#L32-L35).
 
+```r
+selected <- order(apply(x,1,var),decreasing=TRUE)[seq_len(500)]
+pca <- prcomp(t(x[selected,]),center=TRUE,scale.=TRUE)
+variance <- pca$sdev^2/sum(pca$sdev^2)
+colors <- ifelse(group=='ALL','#2878A5','#CB654A')
+```
+
+<details>
+<summary>Open the annotated code screenshot</summary>
+
 ![Source walkthrough showing the input, method and exact code excerpt](walkthrough/source.png)
+
+</details>
 
 3. **Inspect the output.** Open [summary.csv](reports/summary.csv) and the [analysis figure](reports/pca.png). The screenshot puts the saved output beside a short explanation.
 4. **Interpret the result.** PC1 and PC2 together explain 32.38% of variation among the selected features. Nearby points are samples with similar profiles in these two dimensions. The separate tests yielded 695 adjusted hits in this cohort.

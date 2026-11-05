@@ -1,5 +1,9 @@
 # Estimating daily bike rentals
 
+[← All projects](../../README.md#projects) · [Source code](../../run.py) · [Results](../../reports/bike_metrics.csv)
+
+**Tools** · Python · pandas · scikit-learn · Matplotlib
+
 This project compares a simple baseline, Ridge regression and gradient boosting on two years of bike rental data. Keeping later dates out of model selection is the main focus.
 
 ## Step-by-step walkthrough
@@ -7,7 +11,20 @@ This project compares a simple baseline, Ridge regression and gradient boosting 
 1. **Hold out the most recent dates.** I sorted 731 UCI Bike Sharing days by date and reserved the final fifth for evaluation. I excluded casual and registered counts because their sum gives away the target.
 2. **Validate forward in time.** I used scikit-learn TimeSeriesSplit on the earlier dates, fit each model using past observations and scored it on the following window. I chose the model before opening the final holdout. [Open the implementation](../../run.py#L132-L136).
 
+```python
+    for fold,(train,val) in enumerate(TimeSeriesSplit(n_splits=4).split(Xdev)):
+        model.fit(Xdev.iloc[train],ydev.iloc[train])
+        pred = model.predict(Xdev.iloc[val])
+        folds.append({'model':name,'fold':fold+1,'mae':mean_absolute_error(ydev.iloc[val],pred), 'train_end':str(df.dteday.iloc[train[-1]].date()),'validation_start':str(df.dteday.iloc[val[0]].date())})
+cv = pd.DataFrame(folds)
+```
+
+<details>
+<summary>Open the annotated code screenshot</summary>
+
 ![Source walkthrough showing the input, method and exact code excerpt](walkthrough/source.png)
+
+</details>
 
 3. **Inspect the output.** Open [bike_metrics.csv](../../reports/bike_metrics.csv) and the [analysis figure](../../reports/bike_holdout.png). The screenshot puts the saved output beside a short explanation.
 4. **Interpret the result.** Gradient boosting averaged 725 rentals of absolute error per day versus 2,290 for the training-mean baseline. Large gaps between lines are individual misses. Weather was observed the same day.

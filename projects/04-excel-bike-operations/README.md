@@ -1,5 +1,9 @@
 # A monthly bike rental report in Excel
 
+[← All projects](../../README.md#projects) · [Source code](build_workbook.mjs) · [Results](bike_operations.xlsx)
+
+**Tools** · Excel · SUMIFS · COUNTIFS · JavaScript
+
 This workbook turns 731 daily records into a monthly report. It includes formulas, an editable chart and a check that the monthly totals add up to the source data. [Download the workbook](bike_operations.xlsx).
 
 ## Step-by-step walkthrough
@@ -7,7 +11,23 @@ This workbook turns 731 daily records into a monthly report. It includes formula
 1. **Inspect the daily source.** I used the UCI Bike Sharing daily records to build an editable workbook. I kept the month, user type and trip counts so each monthly number could be traced back to daily rows.
 2. **Aggregate within month boundaries.** I used COUNTIFS to count days and SUMIFS to add casual and registered rentals. The end of each interval is the start of the next month, preventing double counting. [Open the implementation](build_workbook.mjs#L34-L41).
 
+```javascript
+ const criteria=`'Daily source'!$A$6:$A${end},">="&B${r},'Daily source'!$A$6:$A${end},"<"&EDATE(B${r},1)`;
+ summary.getRange(`C${r}:H${r}`).formulas=[[
+  `=COUNTIFS(${criteria})`,
+  `=SUMIFS('Daily source'!$D$6:$D${end},${criteria})`,
+  `=SUMIFS('Daily source'!$E$6:$E${end},${criteria})`,
+  `=SUM(D${r}:E${r})`,`=IF(F${r}=0,"n.a.",E${r}/F${r})`,`=IF(C${r}=0,"n.a.",F${r}/C${r})`
+ ]];
+}
+```
+
+<details>
+<summary>Open the annotated code screenshot</summary>
+
 ![Source walkthrough showing the input, method and exact code excerpt](walkthrough/source.png)
+
+</details>
 
 3. **Inspect the output.** Open [bike_operations.xlsx](bike_operations.xlsx). The screenshot shows values read from the workbook.
 4. **Interpret the result.** January 2011 contains 3,073 casual and 35,116 registered trips, adding to 38,189. Registered trips account for 91.95% that month. This measures trips, not distinct riders.

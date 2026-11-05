@@ -1,8 +1,6 @@
-# 04 · Excel bike operations dashboard
+# A monthly bike rental report in Excel
 
-**Question:** How do monthly rental volume and registered-user mix change across 2011–2012?
-
-Download [bike_operations.xlsx](bike_operations.xlsx) and open it in Excel. The workbook contains 731 daily source records and a formula-driven monthly report with a native editable line chart. Source counts stay numeric, dates are Excel dates, the source is filterable, and its headers are frozen.
+This workbook turns 731 daily records into a monthly report. It includes formulas, an editable chart and a check that the monthly totals add up to the source data. [Download the workbook](bike_operations.xlsx).
 
 ## Step-by-step walkthrough
 
@@ -11,17 +9,11 @@ Download [bike_operations.xlsx](bike_operations.xlsx) and open it in Excel. The 
 
 ![Source walkthrough showing the input, method and exact code excerpt](walkthrough/source.png)
 
-3. **Inspect the output.** Open [bike_operations.xlsx](bike_operations.xlsx). The browser capture below shows values from that artifact as a worksheet extract.
+3. **Inspect the output.** Open [bike_operations.xlsx](bike_operations.xlsx). The screenshot shows values read from the workbook.
 4. **Interpret the result.** January 2011 contains 3,073 casual and 35,116 registered trips, adding to 38,189. Registered trips account for 91.95% that month. This measures trips, not distinct riders.
 
 ![Output walkthrough showing measured values and their interpretation](walkthrough/result.png)
 
-
-## Reading the figure
-
-The workbook aggregates trips, so the registered share of 81.17% describes trips taken by registered riders. One frequent rider can contribute many trips. The reconciled total of 3,292,679 checks the aggregation; it does not identify 3.29 million distinct riders.
-
-[Inspect the underlying result](../../projects/04-excel-bike-operations/bike_operations.xlsx)
 
 ## Excel skills demonstrated
 

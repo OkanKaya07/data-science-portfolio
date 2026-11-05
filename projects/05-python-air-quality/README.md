@@ -1,5 +1,9 @@
 # Cleaning air-quality sensor data
 
+[← All projects](../../README.md#projects) · [Source code](air_quality.py) · [Results](reports/daily_summary.csv)
+
+**Tools** · Python standard library · SQLite · unittest
+
 This is a small Python command-line application for turning a sensor CSV into daily summaries. The difficult parts of the input are decimal commas, missing-value markers and days with too few readings.
 
 ## Step-by-step walkthrough
@@ -7,7 +11,19 @@ This is a small Python command-line application for turning a sensor CSV into da
 1. **Handle missing sensor readings.** I parsed the UCI sensor file with Python’s csv module. I converted decimal commas and replaced the source’s −200 missing-value marker with SQL NULL so it could not distort the average.
 2. **Require enough observations.** In SQLite I counted valid CO readings separately from recorded hours. I kept the observed average and a second average that is populated only when at least 18 hours have valid readings. [Open the implementation](air_quality.py#L99-L102).
 
+```python
+COUNT(co_mg_m3) valid_co_hours, AVG(co_mg_m3) observed_co_mean_mg_m3,
+CASE WHEN COUNT(co_mg_m3)>=? THEN AVG(co_mg_m3) END qualified_co_mean_mg_m3,
+AVG(temperature_c) observed_temperature_mean_c
+FROM observations GROUP BY 1 ORDER BY 1''',(min_hours,))
+```
+
+<details>
+<summary>Open the annotated code screenshot</summary>
+
 ![Source walkthrough showing the input, method and exact code excerpt](walkthrough/source.png)
+
+</details>
 
 3. **Inspect the output.** Open [daily_summary.csv](reports/daily_summary.csv). The screenshot puts the saved output beside a short explanation.
 4. **Interpret the result.** On 10 March the six valid readings averaged 1.97 mg/m³, but the coverage-qualified field is blank. On 11 March there were 23 valid hours, so the qualified average is 2.24 mg/m³.

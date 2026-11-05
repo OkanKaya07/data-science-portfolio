@@ -1,5 +1,9 @@
 # Customer groups from purchase history
 
+[← All projects](../../README.md#projects) · [Source code](../../run.py) · [Results](../../reports/segment_profiles.csv)
+
+**Tools** · Python · pandas · NumPy · scikit-learn
+
 This analysis groups 4,338 customers by how recently they ordered, how often they ordered and how much they spent. The useful part is comparing the resulting profiles and deciding what would need testing before acting on them.
 
 ## Step-by-step walkthrough
@@ -7,7 +11,22 @@ This analysis groups 4,338 customers by how recently they ordered, how often the
 1. **Build a customer-level table.** I kept identified customers and used pandas to calculate days since the last purchase, distinct orders and total positive spend. Anonymous sales cannot be attributed to a customer.
 2. **Make the three measures comparable.** I applied log1p and StandardScaler before scikit-learn K-means. Otherwise large monetary values could dominate the distance calculation. [Open the implementation](../../run.py#L92-L98).
 
+```python
+scaled = StandardScaler().fit_transform(np.log1p(rfm[features]))
+candidates = []
+for k in range(2,7):
+    model = KMeans(n_clusters=k, n_init=20, random_state=42).fit(scaled)
+    candidates.append({'k': k, 'silhouette': float(silhouette_score(scaled, model.labels_, sample_size=min(2000,len(rfm)), random_state=42))})
+scores = pd.DataFrame(candidates)
+k = int(scores.loc[scores.silhouette.idxmax(), 'k'])
+```
+
+<details>
+<summary>Open the annotated code screenshot</summary>
+
 ![Source walkthrough showing the input, method and exact code excerpt](walkthrough/source.png)
+
+</details>
 
 3. **Inspect the output.** Open [segment_profiles.csv](../../reports/segment_profiles.csv) and the [analysis figure](../../reports/customer_segments.png). The screenshot puts the saved output beside a short explanation.
 4. **Interpret the result.** The 1,652-customer group had a median of six orders and accounted for 84.95% of identified-customer sales. The horizontal and vertical axes show recency and spend. Frequency also informed clustering.

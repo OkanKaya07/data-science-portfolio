@@ -1,5 +1,9 @@
 # Exploring Pasilla RNA-seq counts
 
+[← All projects](../../README.md#projects) · [Source code](analyze.py) · [Results](reports/samples.csv)
+
+**Tools** · Python · pandas · NumPy
+
 This analysis compares three Pasilla knockdown libraries with four controls. It also checks how single-read and paired-end sequencing relate to the sample differences.
 
 ## Step-by-step walkthrough
@@ -7,7 +11,22 @@ This analysis compares three Pasilla knockdown libraries with four controls. It 
 1. **Align counts with sample labels.** I matched each Drosophila RNA-seq count column to its treatment and sequencing-layout annotation. Of 14,599 genes, 8,148 had at least ten counts in three or more libraries.
 2. **Normalize and compare samples.** I used pandas to calculate log2(1 + counts per million), then NumPy SVD on the 500 most variable genes. Sequencing layout remained visible in the sample metadata. [Open the implementation](analyze.py#L37-L43).
 
+```python
+log_cpm = np.log2(1 + counts.loc[keep].div(sizes, axis="columns") * 1_000_000)
+# Sample-level PCA on centered log-CPM for the 500 most variable genes.
+top = log_cpm.var(axis=1).nlargest(500).index
+X = log_cpm.loc[top].T.to_numpy()
+U, s, _ = np.linalg.svd(X - X.mean(axis=0), full_matrices=False)
+fraction = s**2 / (s**2).sum()
+scores = U[:, :2] * s[:2]
+```
+
+<details>
+<summary>Open the annotated code screenshot</summary>
+
 ![Source walkthrough showing the input, method and exact code excerpt](walkthrough/source.png)
+
+</details>
 
 3. **Inspect the output.** Open [samples.csv](reports/samples.csv) and the [analysis figure](reports/pca.svg). The screenshot puts the saved output beside a short explanation.
 4. **Interpret the result.** PC1 (52.6%) separates the three knockdown libraries from the four controls. PC2 (32.1%) separates read layouts. Both patterns matter when interpreting a gene-level comparison in seven samples.

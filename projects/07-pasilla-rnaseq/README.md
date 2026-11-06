@@ -6,6 +6,22 @@
 
 This analysis compares three Pasilla knockdown libraries with four controls. It also checks how single-read and paired-end sequencing relate to the sample differences.
 
+## Questions I wanted to answer
+
+1. How do the seven libraries differ after accounting for library size?
+2. Do the main sample patterns align with knockdown status, sequencing layout, or both?
+3. Which genes have the largest descriptive knockdown differences after adjusting for layout?
+
+## Tools and why I used them
+
+| Tool | Role in this project |
+|---|---|
+| pandas | Read count and annotation files, align sample IDs, filter low-count genes and export tables |
+| NumPy | Transform normalized counts, compute PCA through SVD and fit the layout-adjusted linear model |
+| Python standard library | Download pinned inputs, verify Git blob hashes and write the labeled SVG plot |
+
+The figure is generated as SVG directly; this script does not use Matplotlib, Seaborn or a differential-expression package.
+
 ## Step-by-step walkthrough
 
 1. **Align counts with sample labels.** I matched each Drosophila RNA-seq count column to its treatment and sequencing-layout annotation. Of 14,599 genes, 8,148 had at least ten counts in three or more libraries.
@@ -58,3 +74,29 @@ python projects/07-pasilla-rnaseq/analyze.py
 ```
 
 **Source:** Brooks et al., *Conservation of an RNA regulatory map between Drosophila and mammals* (2011). [Bioconductor dataset and citation](https://bioconductor.org/packages/pasilla/). Input data retain their original terms.
+
+## What I learned
+
+- **Sample alignment comes before statistics.** The count matrix and annotation table must refer to the same samples in the same order. The script checks their identifiers and reorders metadata explicitly.
+- **Normalization and transformation solve different problems.** Counts per million adjusts for library totals; `log2(1 + CPM)` compresses the range. Neither step by itself supplies a model of biological variability.
+- **PCA is a sample diagnostic.** Here it helps inspect variation associated with condition and read layout. Separation in a PCA plot is not a gene-level significance test.
+- **Effect size and statistical significance are different outputs.** The largest adjusted contrast is **−4.2415** for **FBgn0039155** on the transformed scale. That ranks an observed difference; it does not establish a statistically significant gene or a causal effect.
+
+## Challenges and decisions
+
+The experiment has only **seven libraries**, and read layout varies alongside condition. I keep both annotations visible in the plot and include layout in the descriptive gene comparison:
+
+```python
+design = np.column_stack([np.ones(len(meta)), paired, treated])
+assert np.linalg.matrix_rank(design) == 3
+beta = np.linalg.lstsq(design, log_cpm.T, rcond=None)[0][2]
+```
+
+The three columns represent an intercept, paired-end layout and treatment status. The treatment coefficient therefore compares conditions while accounting for a separate layout offset in this model.
+
+The code checks that both conditions contain both layouts and that the design has full column rank. Those checks make the coefficient estimable, but they do not remove the limitations of a small experiment or simple library-size normalization.
+
+## What I would improve next
+
+For differential-expression inference, I would use a count-based method with dispersion estimation, a design that includes layout and multiple-testing correction. I would also check sensitivity to filtering and normalization. An exon-level splicing question would require different inputs from the gene totals used here.
+

@@ -6,6 +6,21 @@
 
 This project compares a simple baseline, Ridge regression and gradient boosting on two years of bike rental data. Keeping later dates out of model selection is the main focus.
 
+## Questions I wanted to answer
+
+1. Can Ridge regression or gradient boosting improve on a training-mean baseline?
+2. Does that improvement hold on later dates that were not used to select the model?
+3. What information would be available when making a real prediction?
+
+## Tools and why I used them
+
+| Tool | Role in this project |
+|---|---|
+| pandas | Load daily observations, sort dates and construct chronological subsets |
+| NumPy | Encode the annual cycle with sine and cosine |
+| scikit-learn | Build models and a scaling pipeline, run expanding-window validation, calculate errors and permutation importance |
+| Matplotlib | Compare observed rentals with predictions on the final holdout |
+
 ## Step-by-step walkthrough
 
 1. **Hold out the most recent dates.** I sorted 731 UCI Bike Sharing days by date and reserved the final fifth for evaluation. I excluded casual and registered counts because their sum gives away the target.
@@ -51,3 +66,29 @@ Inputs include a calendar trend, cyclical annual features, holidays, working-day
 - [Measured findings](../../reports/FINDINGS.md)
 
 MAE is interpretable as average absolute daily rental error. RMSE emphasizes large misses; negative R² can reveal poor extrapolation. Permutation importance measures predictive sensitivity, not causality. Correlated weather and seasonal features complicate interpretation. The dataset contains only two years from one city, and the final holdout covers a particular season. Extend to rolling seasonal backtests and compare operational lag baselines before using the model for staffing or inventory decisions.
+
+## What I learned
+
+- **The split must match the intended use.** Keeping later dates separate asks whether the model can generalize forward in time. A random split would answer a different question.
+- **Leakage can look like an excellent feature.** `casual + registered = cnt`, so those columns reveal the target. Excluding them is necessary before comparing models.
+- **A baseline makes an error meaningful.** Gradient boosting's holdout MAE is **724.8 rentals/day**, compared with **2,290.4** for the training mean and **1,121.6** for Ridge. Those comparisons give context that a single score cannot.
+- **Prediction-time availability limits the claim.** The model uses observed same-day weather. Its result supports conditional demand estimation, not a tested day-ahead forecast.
+
+## Challenges and decisions
+
+Only **584 days** are available for development, with the final **147 days** reserved for evaluation. I use four expanding-window folds and select the model from validation MAE before evaluating the holdout.
+
+The Ridge preprocessing is inside a scikit-learn pipeline:
+
+```python
+make_pipeline(StandardScaler(), Ridge(alpha=10))
+```
+
+Fitting that pipeline within each fold keeps its scaling parameters tied to the training window. Scaling the full dataset before splitting would allow later observations to influence preprocessing.
+
+The final holdout starts on **7 August 2012**, so it covers only part of the seasonal cycle. A strong result there cannot establish equally good performance in every season or city.
+
+## What I would improve next
+
+I would add rolling seasonal backtests and a lag-based operational baseline. To move toward day-ahead forecasting, I would replace observed weather with forecasts that were available at each prediction time, then repeat the evaluation.
+

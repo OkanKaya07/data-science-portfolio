@@ -8,7 +8,7 @@ I graduated first in Mathematics at Yeditepe University and am looking for a wor
 
 ## Start here
 
-These three projects offer different ways into my work. Each page includes the data, code, output and an explanation of the result.
+These three projects offer different ways into my work. Each page includes the data, code, output and an explanation of the result. The Python projects also describe the questions, the role of each library, what I learned and what I would improve next.
 
 <table>
 <tr>
@@ -68,6 +68,8 @@ The small dataset checks and fixed random seeds make unexpected changes visible.
 These two datasets are distributed by UCI under CC BY 4.0. Derived data and charts retain that attribution. The air-quality and Golub projects document their own source terms in their READMEs: the air-quality source explicitly excludes commercial use, and the Bioconductor package is LGPL. Original project code is MIT licensed; third-party data are not relicensed as MIT. These historical datasets demonstrate methods and do not describe current conditions.
 
 ## Portfolio notes
+
+The question-led Python walkthroughs and learning sections take presentation inspiration from [Luke Barousse's Python Data Analytics Course](https://github.com/lukebarousse/Python_Data_Analytics_Course/tree/main/3_Project). The datasets, analyses and takeaways here come from the projects linked above.
 
 These projects were developed with AI assistance in coding and documentation. The linked scripts, datasets and output files document how the results were produced.
 

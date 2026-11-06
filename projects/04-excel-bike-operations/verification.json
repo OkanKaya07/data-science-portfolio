@@ -1,8 +1,66 @@
 {
   "source_days": 731,
   "total_rentals": 3292679,
-  "recalculation_test": "passed",
-  "summary_total": 3292679,
+  "registered_share": 0.8116983161735475,
+  "selector_checks": [
+    {
+      "year": "All",
+      "day": "All",
+      "days": 731,
+      "rentals": 3292679
+    },
+    {
+      "year": "All",
+      "day": "Working day",
+      "days": 500,
+      "rentals": 2292410
+    },
+    {
+      "year": "All",
+      "day": "Non-working day",
+      "days": 231,
+      "rentals": 1000269
+    },
+    {
+      "year": "2011",
+      "day": "All",
+      "days": 365,
+      "rentals": 1243103
+    },
+    {
+      "year": "2011",
+      "day": "Working day",
+      "days": 250,
+      "rentals": 856264
+    },
+    {
+      "year": "2011",
+      "day": "Non-working day",
+      "days": 115,
+      "rentals": 386839
+    },
+    {
+      "year": "2012",
+      "day": "All",
+      "days": 366,
+      "rentals": 2049576
+    },
+    {
+      "year": "2012",
+      "day": "Working day",
+      "days": 250,
+      "rentals": 1436146
+    },
+    {
+      "year": "2012",
+      "day": "Non-working day",
+      "days": 116,
+      "rentals": 613430
+    }
+  ],
+  "source_change_test": "passed; +10 propagated, inconsistent source flagged, original restored",
+  "formula_errors": [],
   "source_reconciliation": 0,
-  "chart_count": 1
+  "chart_count": 4,
+  "native_excel_desktop_tested": false
 }

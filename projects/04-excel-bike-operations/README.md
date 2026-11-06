@@ -1,55 +1,123 @@
-# A monthly bike rental report in Excel
+# Bike rental dashboard in Excel
 
-[← All projects](../../README.md#projects) · [Source code](build_workbook.mjs) · [Results](bike_operations.xlsx)
+[← All projects](../../README.md#projects) · [Download the workbook](https://github.com/OkanKaya07/data-science-portfolio/raw/refs/heads/main/projects/04-excel-bike-operations/bike_operations.xlsx) · [Build script](build_workbook.mjs)
 
-**Tools** · Excel · SUMIFS · COUNTIFS · JavaScript
+I wanted to turn my monthly bike rental report into something a reader could explore. This version adds year and day-type filters, a seasonal demand chart, a user-type comparison and a weather comparison. The original monthly report is still in the workbook.
 
-This workbook turns 731 daily records into a monthly report. It includes formulas, an editable chart and a check that the monthly totals add up to the source data. [Download the workbook](bike_operations.xlsx).
+![Excel dashboard with year and day-type selectors, four metrics and three charts](dashboard.png)
 
-## Step-by-step walkthrough
+**Tools:** Excel · SUMIFS · COUNTIFS · IF · EDATE · Data Validation · native Excel charts  
+**Data:** 731 daily Capital Bikeshare observations from Washington, D.C., January 2011–December 2012.
 
-1. **Inspect the daily source.** I used the UCI Bike Sharing daily records to build an editable workbook. I kept the month, user type and trip counts so each monthly number could be traced back to daily rows.
-2. **Aggregate within month boundaries.** I used COUNTIFS to count days and SUMIFS to add casual and registered rentals. The end of each interval is the start of the next month, preventing double counting. [Open the implementation](build_workbook.mjs#L34-L41).
+## Try it
 
-```javascript
- const criteria=`'Daily source'!$A$6:$A${end},">="&B${r},'Daily source'!$A$6:$A${end},"<"&EDATE(B${r},1)`;
- summary.getRange(`C${r}:H${r}`).formulas=[[
-  `=COUNTIFS(${criteria})`,
-  `=SUMIFS('Daily source'!$D$6:$D${end},${criteria})`,
-  `=SUMIFS('Daily source'!$E$6:$E${end},${criteria})`,
-  `=SUM(D${r}:E${r})`,`=IF(F${r}=0,"n.a.",E${r}/F${r})`,`=IF(C${r}=0,"n.a.",F${r}/C${r})`
- ]];
-}
+1. Download **[bike_operations.xlsx](https://github.com/OkanKaya07/data-science-portfolio/raw/refs/heads/main/projects/04-excel-bike-operations/bike_operations.xlsx)** and open it in Excel.
+2. On **Dashboard**, change the amber **Year** and **Day type** dropdowns.
+3. Compare 2011 with 2012, then working days with non-working days. All three dashboard charts and the four metrics use the same selection.
+4. Open **Dashboard data** to see the counts and calculations behind the charts.
+
+No macros or external data connection are required. The GitHub image is a static preview; the dropdowns work in the workbook.
+
+| Sheet | Purpose |
+|---|---|
+| Dashboard | Filtered metrics and charts |
+| Monthly operations | The complete 24-month report, independent of dashboard filters |
+| Daily source | Original daily observations in a filterable Excel table |
+| Dashboard data | Formula-backed chart data, sample sizes and calculation notes |
+
+## What I found
+
+These results use **All years / All day types** unless a year is specified.
+
+| Question | Result | What it means |
+|---|---|---|
+| How much activity is represented? | **3,292,679 rentals** across **731 days** | About **4,504 rentals per day**. These are trips, not unique people. |
+| Who accounts for the rentals? | **2,672,662 registered** and **620,017 casual** rentals | Registered rentals make up **81.17%** of trips. This is a share of activity, not the share of individual customers. |
+| When is average demand highest? | June: **5,772/day**; September: **5,767/day**; January: **2,176/day** | The pooled monthly pattern is much higher in warmer months. Daily averages avoid giving longer months an automatic advantage. |
+| How different are the two years? | 2011: **3,406/day**; 2012: **5,600/day** | The later year has substantially higher observed demand. Selecting a year helps separate this change from the pooled seasonal pattern. |
+| How does demand vary with weather? | Clear/partly cloudy: **4,877/day**; mist/cloudy: **4,036/day**; light rain/snow: **1,803/day** | Worse weather is associated with fewer rentals, but this comparison does not control for season, year or other factors. |
+
+The weather groups contain **463**, **247** and **21 days**, respectively. The light-rain/snow estimate has a much smaller sample. I would not describe the difference as a causal weather effect.
+
+## How I built it
+
+### 1. Keep the daily records available
+
+I kept date, year, month, casual and registered rental counts, the original total, normalized temperature, working-day flag, holiday flag and weather code. Each row represents one day.
+
+A working day is neither a weekend nor a holiday. Weather labels are shortened descriptions of the UCI categories. The daily dataset has no observations in weather category 4.
+
+![Daily source table with dates, rental counts and original indicators](daily-source.png)
+
+### 2. Turn dropdown choices into formula criteria
+
+The two dropdowns use **Data Validation**. On the calculation sheet, these formulas convert the selections into criteria:
+
+```excel
+=IF(Dashboard!B6="All",">=2011",Dashboard!B6)
+=IF(Dashboard!F6="All",">=0",IF(Dashboard!F6="Working day",1,0))
 ```
 
-<details>
-<summary>Open the annotated code screenshot</summary>
+For example, January's casual rentals are calculated with:
 
-![Source walkthrough showing the input, method and exact code excerpt](walkthrough/source.png)
+```excel
+=SUMIFS('Daily source'!$D$6:$D$736,
+        'Daily source'!$B$6:$B$736,$C$5,
+        'Daily source'!$H$6:$H$736,$C$6,
+        'Daily source'!$C$6:$C$736,1)
+```
 
-</details>
+I use the same criteria in **COUNTIFS** to count observed days, and a second **SUMIFS** for registered rentals. Daily average is the sum of both rental types divided by observed days:
 
-3. **Inspect the output.** Open [bike_operations.xlsx](bike_operations.xlsx). The screenshot shows values read from the workbook.
-4. **Interpret the result.** January 2011 contains 3,073 casual and 35,116 registered trips, adding to 38,189. Registered trips account for 91.95% that month. This measures trips, not distinct riders.
+```excel
+=IF(C10=0,0,SUM(D10:E10)/C10)
+```
 
-![Output walkthrough showing measured values and their interpretation](walkthrough/result.png)
+The zero-count guard prevents division errors. Always check the day count: zero observations is not evidence of zero demand. All nine supplied filter combinations contain observations in every displayed month and weather group.
 
+### 3. Connect the charts to the calculations
 
-## Excel skills demonstrated
+The monthly chart uses **rentals per day**, the user chart uses **trip totals**, and the weather chart uses **rentals per day within each weather category**. Each answers a different question.
 
-- Bounded `SUMIFS` and `COUNTIFS` with inclusive month starts and exclusive next-month boundaries.
-- `EDATE`, zero-denominator handling, aggregate registered share, and daily averages.
-- A source-to-summary reconciliation and conditional formatting for a nonzero difference.
-- Cell-linked chart series and consistent number/date formats.
+All charts are native, editable Excel charts connected to cells. The dashboard is formula-driven; it does not claim to use PivotTables, Power Query or DAX.
 
-**Measured results:** 3,292,679 rentals over 731 days. Registered rentals account for 81.17% of total rentals. These are rentals, not distinct customers. Monthly totals alone cannot establish why demand changes.
+![Calculation sheet showing monthly aggregates, weather sample sizes and rental totals by user type](dashboard-data.png)
 
-## Refresh and verification
+### 4. Preserve the monthly report and check the totals
 
-The report covers the fixed January 2011–December 2012 window. Editing source counts recalculates the report. Appending new dates requires extending the bounded formula ranges and report months. The summary recomputes totals from casual and registered counts, while the check compares against the source total column, making inconsistent source edits visible.
+The original report uses inclusive month starts and exclusive next-month boundaries with **EDATE**. It keeps all 24 months visible so readers can inspect the chronological pattern.
 
-The artifact calculation engine verified the full total and tested a temporary +10 change to a source count before restoring it. Both sheets were rendered and reviewed. Exported formula caches and chart cell references were inspected. Native Excel desktop recalculation was not separately exercised.
+![Monthly report with totals, registered share, average daily rentals and a chronological chart](monthly-operations.png)
 
-For regeneration, run `python run.py --download-only`, then `python projects/04-excel-bike-operations/prepare_data.py`. The optional JavaScript authoring script uses `@oai/artifact-tool` in the Codex workspace runtime; the delivered `.xlsx` requires no authoring dependency to use. See [verification.json](verification.json).
+The report sums casual and registered counts, then compares that result with the original source-total column. The difference is **0**. Editing a component without updating the original total makes the discrepancy visible.
 
-**Source:** Fanaee-T, H. (2013), [UCI Bike Sharing](https://archive.ics.uci.edu/dataset/275/bike+sharing+dataset), [DOI](https://doi.org/10.24432/C5W894), CC BY 4.0. The workbook embeds selected original daily columns; the original archive hash is in the repository's data provenance.
+## Checks and limitations
+
+- Compared totals, day counts, monthly averages and weather averages with independent calculations for **all nine selector combinations**.
+- Temporarily added **10 rentals** to a source cell: the dashboard updated and the reconciliation flagged the inconsistency. Restored the original value afterward.
+- Checked formula errors, exported values, validation lists and chart references; reviewed rendered views of all four sheets.
+- See [verification.json](verification.json) for the calculation checks.
+
+The calculations were exercised in the authoring engine, and the exported XLSX was inspected independently. Native Excel desktop interaction was not separately tested.
+
+This workbook has bounded ranges for **731 records** and a fixed **2011–2012** period. Editing existing counts recalculates the report; adding dates requires extending the formulas and month window. It is a descriptive analysis of historical data, not a demand forecast.
+
+## Reproduce the workbook
+
+From the repository root:
+
+```bash
+python run.py --download-only
+python projects/04-excel-bike-operations/prepare_data.py
+node projects/04-excel-bike-operations/build_workbook.mjs
+```
+
+The JavaScript builder uses `@oai/artifact-tool` in the Codex runtime to write Excel formulas, formatting and charts. It is not a public npm dependency assumed by this repository. The delivered workbook can be used without that runtime. The script also accepts an input JSON path and an output directory as positional arguments.
+
+## Source and inspiration
+
+**Dataset:** Fanaee-T, H. (2013), [UCI Bike Sharing](https://archive.ics.uci.edu/dataset/275/bike+sharing+dataset), [DOI: 10.24432/C5W894](https://doi.org/10.24432/C5W894), CC BY 4.0. Original archive hashes are recorded in [data/provenance.json](../../data/provenance.json).
+
+**Presentation inspiration:** Luke Barousse's [Excel Data Analytics Course](https://github.com/lukebarousse/Excel_Data_Analytics_Course), particularly its dashboard-first layout, dropdown controls and question-led project explanations. I adapted that approach to the bike dataset; this is not the course's salary project.
+
+Built with AI assistance, as noted in the portfolio README. The source, formulas and checks are included so the work can be inspected and reproduced.

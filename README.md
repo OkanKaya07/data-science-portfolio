@@ -29,6 +29,7 @@ These three projects offer different ways into my work. Each page includes the d
 | [Air-quality pipeline](projects/05-python-air-quality/README.md) | Python standard library · SQLite · unittest | Keep missing readings visible in daily summaries | [Code](projects/05-python-air-quality/air_quality.py) · [Output](projects/05-python-air-quality/reports/daily_summary.csv) |
 | [Leukemia expression](projects/06-r-bioinformatics/README.md) | Base R · Welch tests · PCA | Explore variation across 38 tumor samples | [Code](projects/06-r-bioinformatics/analyze.R) · [Output](projects/06-r-bioinformatics/reports/summary.csv) |
 | [Pasilla RNA-seq](projects/07-pasilla-rnaseq/README.md) | Python · pandas · NumPy | Compare condition and read-layout patterns | [Code](projects/07-pasilla-rnaseq/analyze.py) · [Output](projects/07-pasilla-rnaseq/reports/samples.csv) |
+| [Diagnostic risk classification](projects/08-diagnostic-risk-classification/README.md) | Python · pandas · scikit-learn | Leakage-aware classification with a development-set threshold and untouched holdout | [Code](projects/08-diagnostic-risk-classification/analyze.py) · [Output](projects/08-diagnostic-risk-classification/reports/model_metrics.csv) |
 
 ## About my studies
 
@@ -48,7 +49,7 @@ python -m unittest discover -s tests -v
 python -m unittest discover -s projects/05-python-air-quality -v
 ```
 
-`run.py` reproduces projects 1–3 and downloads their original UCI archives. `python run.py --download-only` downloads without analyzing. Projects 4–7 have their own instructions linked above. Raw archives, local caches, and SQLite databases are ignored by Git. Reports, charts, the Excel workbook, and source hashes are versioned. Unit tests use tiny constructed edge cases; all reported analytical results use real source data. Do not load pickle caches from third parties; delete your local `data/cache/` to rebuild.
+`run.py` reproduces projects 1–3 and downloads their original UCI archives. `python run.py --download-only` downloads without analyzing. Projects 4–8 have their own instructions linked above. Raw archives, local caches, and SQLite databases are ignored by Git. Reports, charts, the Excel workbook, and source hashes are versioned. Unit tests use tiny constructed edge cases; all reported analytical results use real source data. Do not load pickle caches from third parties; delete your local `data/cache/` to rebuild.
 
 ## Evidence and reproducibility
 

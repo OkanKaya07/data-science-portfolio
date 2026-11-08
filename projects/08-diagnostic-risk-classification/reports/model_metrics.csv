@@ -1,0 +1,4 @@
+model,cv_roc_auc_mean,cv_roc_auc_std,cv_average_precision_mean,cv_balanced_accuracy_mean,selected,threshold_from_oof_f2,development_oof_f2,test_roc_auc,test_average_precision,test_brier_score,test_balanced_accuracy,test_recall_malignant,test_precision_malignant,test_f2,holdout_true_negative,holdout_false_positive,holdout_false_negative,holdout_true_positive
+scaled_logistic_regression,0.990645,0.011376,0.990367,0.963683,yes,0.401836,0.969962,0.994969,0.992709,0.022779,0.975577,0.962264,0.980769,0.965909,89.000000,1.000000,2.000000,51.000000
+random_forest,0.987701,0.008368,0.985789,0.951637,no,,,,,,,,,,,,,
+dummy_prior,0.500000,0.000000,0.373242,0.500000,no,,,,,,,,,,,,,

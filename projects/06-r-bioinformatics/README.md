@@ -6,7 +6,7 @@
 
 This project compares ALL and AML samples in the historical Golub dataset. It combines an overview of sample variation with a separate comparison of individual expression features.
 
-## Code and results in Visual Studio
+## Code and results in R
 
 1. **Check the expression matrix.** I loaded the preprocessed Golub microarray data and verified 3,051 features across 38 tumors. I treated the ALL and AML labels as sample groups, keeping their identities out of the PCA feature selection.
 2. **Build an unsupervised view.** I used base R to select the 500 most variable features, then centered and scaled them with prcomp. In a separate analysis I compared ALL and AML with Welch tests and adjusted the p-values for multiple testing. [Open the implementation](analyze.R#L32-L35).
@@ -20,17 +20,21 @@ colors <- ifelse(group=='ALL','#2878A5','#CB654A')
 
 ![R expression analysis script open in Visual Studio](../../docs/visual-studio/06-code.jpg)
 
-3. **Inspect the output.** Open [summary.csv](reports/summary.csv) in Visual Studio.
+3. **Run the script.** With the repository root as the working directory, enter the following in the R console.
 
-![Leukemia expression summary open in Visual Studio](../../docs/visual-studio/06-output.jpg)
+```r
+source("projects/06-r-bioinformatics/analyze.R")
+```
 
-The `Rscript` run passed the dimension, class count, finite value and adjusted p-value checks. It generated the PCA plot shown below in Visual Studio.
+![R console showing the source command, passed validation checks and expression summary](r-console.jpg)
 
-[![Leukemia sample PCA opened in the Visual Studio image editor](../../docs/visual-studio/06-plot.jpg)](reports/pca.png)
+The console prints the same counts and variance shares saved in [summary.csv](reports/summary.csv). The PCA scatter plot below uses the scores from that R session.
+
+[![Sample PCA in the R Graphics window beside the R console](r-pca.jpg)](reports/pca.png)
 
 4. **Interpret the result.** PC1 and PC2 together explain 32.38% of variation among the selected features. Nearby points are samples with similar profiles in these two dimensions. The separate tests yielded 695 adjusted hits in this cohort.
 
-## Run
+## Run from a terminal
 
 From the repository root with R 4.5 or newer:
 

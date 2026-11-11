@@ -92,3 +92,4 @@ The final holdout starts on **7 August 2012**, so it covers only part of the sea
 
 I would add rolling seasonal backtests and a lag-based operational baseline. To move toward day-ahead forecasting, I would replace observed weather with forecasts that were available at each prediction time, then repeat the evaluation.
 
+[See the code and output in Visual Studio](../../docs/visual-studio/README.md#03-bike-rental-demand).

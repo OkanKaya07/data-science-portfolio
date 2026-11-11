@@ -88,3 +88,4 @@ The chart only shows recency and spending. Frequency also influences the cluster
 
 I would repeat the analysis at monthly snapshots and compare group membership over time. Before using the groups for a campaign, I would test whether an intervention produces additional purchases using a randomized holdout.
 
+[See the code and output in Visual Studio](../../docs/visual-studio/README.md#02-customer-segmentation).

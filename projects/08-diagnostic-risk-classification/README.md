@@ -75,3 +75,5 @@ The script uses a fixed seed (`42`), writes all reported outputs, and checks tha
 - `Pipeline` objects make it practical to keep transformations inside cross-validation rather than scaling the full dataset first.
 - ROC AUC evaluates ranking; it does not choose an operating threshold. An explicit threshold should match the review objective and its error costs.
 - Reporting the baseline and error counts makes a model comparison more auditable than showing one headline score.
+
+[See the code and output in Visual Studio](../../docs/visual-studio/README.md#08-diagnostic-risk-classification).

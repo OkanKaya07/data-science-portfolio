@@ -100,3 +100,4 @@ The code checks that both conditions contain both layouts and that the design ha
 
 For differential-expression inference, I would use a count-based method with dispersion estimation, a design that includes layout and multiple-testing correction. I would also check sensitivity to filtering and normalization. An exon-level splicing question would require different inputs from the gene totals used here.
 
+[See the code and output in Visual Studio](../../docs/visual-studio/README.md#07-pasilla-rna-seq).

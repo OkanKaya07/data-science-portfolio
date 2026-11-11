@@ -73,3 +73,5 @@ Future work: analyze original assay metadata, update probe annotations, use a co
 - Dudoit, Fridlyand and Speed (2002), *Comparison of discrimination methods for the classification of tumors using gene expression data*, JASA 97(457):77–87 (source preprocessing).
 - [Bioconductor multtest 2.68.0](https://bioconductor.org/packages/release/bioc/html/multtest.html), [reference manual, Golub data section](https://bioconductor.org/packages/release/bioc/manuals/multtest/man/multtest.pdf), [package DOI](https://doi.org/10.18129/B9.bioc.multtest). Package license: LGPL. The package/data are not relicensed by the MIT license for this project's original code. Original raw expression matrices are not redistributed here.
 - [Source archive SHA-256](provenance.json) records the downloaded Bioconductor mirror artifact.
+
+[See the code and output in Visual Studio](../../docs/visual-studio/README.md#06-leukemia-expression-analysis).

@@ -121,3 +121,5 @@ The JavaScript builder uses `@oai/artifact-tool` in the Codex runtime to write E
 **Presentation inspiration:** Luke Barousse's [Excel Data Analytics Course](https://github.com/lukebarousse/Excel_Data_Analytics_Course), particularly its dashboard-first layout, dropdown controls and question-led project explanations. I adapted that approach to the bike dataset; this is not the course's salary project.
 
 Built with AI assistance, as noted in the portfolio README. The source, formulas and checks are included so the work can be inspected and reproduced.
+
+[See the code and output in Visual Studio](../../docs/visual-studio/README.md#04-excel-bike-operations).

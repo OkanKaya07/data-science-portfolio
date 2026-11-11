@@ -96,3 +96,4 @@ The result contains **524,878 lines**. I keep the [audit](../../reports/retail_a
 
 I would add an explicit coverage column to the monthly report and inspect non-product stock codes. Matching returns to original invoices would be a separate next step before describing the result as net sales.
 
+[See the code and output in Visual Studio](../../docs/visual-studio/README.md#01-retail-sales).

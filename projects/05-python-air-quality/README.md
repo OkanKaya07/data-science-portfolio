@@ -110,3 +110,4 @@ The default **18-hour** threshold is an analytical choice, exposed through `--mi
 
 I would record the complete command and software version in a run manifest, then add checks for changes in missingness across runs. Timezone-aware processing would require reliable collection metadata rather than an assumed timezone.
 
+[See the code and output in Visual Studio](../../docs/visual-studio/README.md#05-air-quality-pipeline).

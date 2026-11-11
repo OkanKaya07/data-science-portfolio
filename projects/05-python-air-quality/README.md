@@ -24,7 +24,7 @@ This is a small Python command-line application for turning a sensor CSV into da
 
 This project uses Python's standard library rather than pandas. The data handling is small enough to express directly, and explicit parsing makes failure cases easy to inspect.
 
-## Step-by-step walkthrough
+## Code and results in Visual Studio
 
 1. **Handle missing sensor readings.** I parsed the UCI sensor file with Python’s csv module. I converted decimal commas and replaced the source’s −200 missing-value marker with SQL NULL so it could not distort the average.
 2. **Require enough observations.** In SQLite I counted valid CO readings separately from recorded hours. I kept the observed average and a second average that is populated only when at least 18 hours have valid readings. [Open the implementation](air_quality.py#L99-L102).
@@ -36,17 +36,17 @@ AVG(temperature_c) observed_temperature_mean_c
 FROM observations GROUP BY 1 ORDER BY 1''',(min_hours,))
 ```
 
-<details>
-<summary>Open the annotated code screenshot</summary>
+![Air quality pipeline source open in Visual Studio](../../docs/visual-studio/05-code.jpg)
 
-![Source walkthrough showing the input, method and exact code excerpt](walkthrough/source.png)
+3. **Inspect the output.** Open [daily_summary.csv](reports/daily_summary.csv) in Visual Studio.
 
-</details>
+![Daily CO averages and coverage counts open in Visual Studio](../../docs/visual-studio/05-output.jpg)
 
-3. **Inspect the output.** Open [daily_summary.csv](reports/daily_summary.csv). The screenshot puts the saved output beside a short explanation.
+**Visual Studio Output.** The debugger run loaded 9,357 observations. The daily CSV shows mean CO and the number of valid hours.
+
+![Air quality record count printed in the Visual Studio Output window](../../docs/visual-studio/05-debug-output.jpg)
+
 4. **Interpret the result.** On 10 March the six valid readings averaged 1.97 mg/m³, but the coverage-qualified field is blank. On 11 March there were 23 valid hours, so the qualified average is 2.24 mg/m³.
-
-![Output walkthrough showing measured values and their interpretation](walkthrough/result.png)
 
 ## Run
 
@@ -109,5 +109,3 @@ The default **18-hour** threshold is an analytical choice, exposed through `--mi
 ## What I would improve next
 
 I would record the complete command and software version in a run manifest, then add checks for changes in missingness across runs. Timezone-aware processing would require reliable collection metadata rather than an assumed timezone.
-
-[See the code and output in Visual Studio](../../docs/visual-studio/README.md#05-air-quality-pipeline).

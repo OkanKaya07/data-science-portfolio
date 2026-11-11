@@ -37,6 +37,8 @@ My current courses cover deep learning, optimization, simulation techniques and 
 
 ## Run locally
 
+[Visual Studio walkthrough](docs/visual-studio/README.md)
+
 Python 3.12 recommended. From the repository root:
 
 ```bash

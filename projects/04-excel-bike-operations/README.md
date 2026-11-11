@@ -4,7 +4,9 @@
 
 I wanted to turn my monthly bike rental report into something a reader could explore. This version adds year and day-type filters, a seasonal demand chart, a user-type comparison and a weather comparison. The original monthly report is still in the workbook.
 
-![Excel dashboard with year and day-type selectors, four metrics and three charts](dashboard.png)
+![Dashboard open in Microsoft Excel with the 2012 working-day filter and all three charts](excel-dashboard.jpg)
+
+With **2012** and **Working day** selected, Excel shows **1,436,146 rentals** over **250 days**. The formula bar shows how the total is calculated from the dashboard data.
 
 **Tools:** Excel · SUMIFS · COUNTIFS · IF · EDATE · Data Validation · native Excel charts  
 **Data:** 731 daily Capital Bikeshare observations from Washington, D.C., January 2011–December 2012.
@@ -98,7 +100,7 @@ The report sums casual and registered counts, then compares that result with the
 - Checked formula errors, exported values, validation lists and chart references; reviewed rendered views of all four sheets.
 - See [verification.json](verification.json) for the calculation checks.
 
-The calculations were exercised in the authoring engine, and the exported XLSX was inspected independently. Native Excel desktop interaction was not separately tested.
+The build report covers the automated checks. In desktop Excel, changing the year to 2012 and then the day type to Working day recalculated the metrics and refreshed all three charts.
 
 This workbook has bounded ranges for **731 records** and a fixed **2011–2012** period. Editing existing counts recalculates the report; adding dates requires extending the formulas and month window. It is a descriptive analysis of historical data, not a demand forecast.
 
@@ -123,10 +125,6 @@ Open [build_workbook.mjs](build_workbook.mjs) in Visual Studio to see how the wo
 Open [verification.json](verification.json) in the editor to inspect the checks on the workbook. Open [bike_operations.xlsx](bike_operations.xlsx) in Excel to use the dashboard shown above.
 
 ![Workbook validation results open in Visual Studio](../../docs/visual-studio/04-output.jpg)
-
-The Node builder wrote the workbook and reported nine checks, four charts and 3,292,679 total rentals. The regenerated dashboard preview is open below in Visual Studio. The workbook opens in Excel for filter interaction.
-
-[![Regenerated Excel dashboard preview opened in the Visual Studio image editor](../../docs/visual-studio/04-plot.jpg)](dashboard.png)
 
 ## Source and inspiration
 

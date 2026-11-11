@@ -22,7 +22,7 @@ This analysis compares three Pasilla knockdown libraries with four controls. It 
 
 The figure is generated as SVG directly; this script does not use Matplotlib, Seaborn or a differential-expression package.
 
-## Step-by-step walkthrough
+## Code and results in Visual Studio
 
 1. **Align counts with sample labels.** I matched each Drosophila RNA-seq count column to its treatment and sequencing-layout annotation. Of 14,599 genes, 8,148 had at least ten counts in three or more libraries.
 2. **Normalize and compare samples.** I used pandas to calculate log2(1 + counts per million), then NumPy SVD on the 500 most variable genes. Sequencing layout remained visible in the sample metadata. [Open the implementation](analyze.py#L37-L43).
@@ -37,17 +37,19 @@ fraction = s**2 / (s**2).sum()
 scores = U[:, :2] * s[:2]
 ```
 
-<details>
-<summary>Open the annotated code screenshot</summary>
+![Pasilla count normalization and PCA code open in Visual Studio](../../docs/visual-studio/07-code.jpg)
 
-![Source walkthrough showing the input, method and exact code excerpt](walkthrough/source.png)
+3. **Inspect the output.** Open [samples.csv](reports/samples.csv) in Visual Studio.
 
-</details>
+![Pasilla sample library totals and PCA scores open in Visual Studio](../../docs/visual-studio/07-output.jpg)
 
-3. **Inspect the output.** Open [samples.csv](reports/samples.csv) and the [analysis figure](reports/pca.svg). The screenshot puts the saved output beside a short explanation.
+**Visual Studio Output.** The Python run printed library totals and PCA coordinates for all seven samples.
+
+![Pasilla sample PCA scores printed in the Visual Studio Output window](../../docs/visual-studio/07-debug-output.jpg)
+
+[![Rendered Pasilla sample PCA opened in the Visual Studio image editor](../../docs/visual-studio/07-plot.jpg)](reports/pca.svg)
+
 4. **Interpret the result.** PC1 (52.6%) separates the three knockdown libraries from the four controls. PC2 (32.1%) separates read layouts. Both patterns matter when interpreting a gene-level comparison in seven samples.
-
-![Output walkthrough showing measured values and their interpretation](walkthrough/result.png)
 
 ## Data and method
 
@@ -99,5 +101,3 @@ The code checks that both conditions contain both layouts and that the design ha
 ## What I would improve next
 
 For differential-expression inference, I would use a count-based method with dispersion estimation, a design that includes layout and multiple-testing correction. I would also check sensitivity to filtering and normalization. An exon-level splicing question would require different inputs from the gene totals used here.
-
-[See the code and output in Visual Studio](../../docs/visual-studio/README.md#07-pasilla-rna-seq).

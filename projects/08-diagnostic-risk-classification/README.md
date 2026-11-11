@@ -61,6 +61,20 @@ python analyze.py
 
 The script uses a fixed seed (`42`), writes all reported outputs, and checks that development and holdout rows do not overlap. Exact floating-point output can differ slightly on another platform or library release.
 
+## Code and results in Visual Studio
+
+Open [analyze.py](analyze.py) in Visual Studio to inspect the pipeline, then use the commands above in the Visual Studio terminal.
+
+![Diagnostic classification analysis script open in Visual Studio](../../docs/visual-studio/08-code.jpg)
+
+Open [model_metrics.csv](reports/model_metrics.csv) to compare the three candidates and see the selected model's holdout results. [run_summary.json](reports/run_summary.json) records the selected threshold and holdout error counts.
+
+![Model comparison and holdout scores open in Visual Studio](../../docs/visual-studio/08-output.jpg)
+
+**Visual Studio Output.** The debugger run printed the development and holdout metrics for the classification pipeline.
+
+![Diagnostic classification metrics printed in the Visual Studio Output window](../../docs/visual-studio/08-debug-output.jpg)
+
 ## Limitations and responsible interpretation
 
 - The data are small, historic, and may not represent contemporary patients, devices, populations, or clinical workflows.
@@ -75,5 +89,3 @@ The script uses a fixed seed (`42`), writes all reported outputs, and checks tha
 - `Pipeline` objects make it practical to keep transformations inside cross-validation rather than scaling the full dataset first.
 - ROC AUC evaluates ranking; it does not choose an operating threshold. An explicit threshold should match the review objective and its error costs.
 - Reporting the baseline and error counts makes a model comparison more auditable than showing one headline score.
-
-[See the code and output in Visual Studio](../../docs/visual-studio/README.md#08-diagnostic-risk-classification).

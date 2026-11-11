@@ -114,6 +114,20 @@ node projects/04-excel-bike-operations/build_workbook.mjs
 
 The JavaScript builder uses `@oai/artifact-tool` in the Codex runtime to write Excel formulas, formatting and charts. It is not a public npm dependency assumed by this repository. The delivered workbook can be used without that runtime. The script also accepts an input JSON path and an output directory as positional arguments.
 
+## Code and results in Visual Studio
+
+Open [build_workbook.mjs](build_workbook.mjs) in Visual Studio to see how the workbook and its formulas are assembled.
+
+![Workbook builder and monthly formulas open in Visual Studio](../../docs/visual-studio/04-code.jpg)
+
+Open [verification.json](verification.json) in the editor to inspect the checks on the workbook. Open [bike_operations.xlsx](bike_operations.xlsx) in Excel to use the dashboard shown above.
+
+![Workbook validation results open in Visual Studio](../../docs/visual-studio/04-output.jpg)
+
+The Node builder wrote the workbook and reported nine checks, four charts and 3,292,679 total rentals. The regenerated dashboard preview is open below in Visual Studio. The workbook opens in Excel for filter interaction.
+
+[![Regenerated Excel dashboard preview opened in the Visual Studio image editor](../../docs/visual-studio/04-plot.jpg)](dashboard.png)
+
 ## Source and inspiration
 
 **Dataset:** Fanaee-T, H. (2013), [UCI Bike Sharing](https://archive.ics.uci.edu/dataset/275/bike+sharing+dataset), [DOI: 10.24432/C5W894](https://doi.org/10.24432/C5W894), CC BY 4.0. Original archive hashes are recorded in [data/provenance.json](../../data/provenance.json).
@@ -121,5 +135,3 @@ The JavaScript builder uses `@oai/artifact-tool` in the Codex runtime to write E
 **Presentation inspiration:** Luke Barousse's [Excel Data Analytics Course](https://github.com/lukebarousse/Excel_Data_Analytics_Course), particularly its dashboard-first layout, dropdown controls and question-led project explanations. I adapted that approach to the bike dataset; this is not the course's salary project.
 
 Built with AI assistance, as noted in the portfolio README. The source, formulas and checks are included so the work can be inspected and reproduced.
-
-[See the code and output in Visual Studio](../../docs/visual-studio/README.md#04-excel-bike-operations).

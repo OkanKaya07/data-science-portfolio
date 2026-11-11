@@ -6,7 +6,7 @@
 
 This project compares ALL and AML samples in the historical Golub dataset. It combines an overview of sample variation with a separate comparison of individual expression features.
 
-## Step-by-step walkthrough
+## Code and results in Visual Studio
 
 1. **Check the expression matrix.** I loaded the preprocessed Golub microarray data and verified 3,051 features across 38 tumors. I treated the ALL and AML labels as sample groups, keeping their identities out of the PCA feature selection.
 2. **Build an unsupervised view.** I used base R to select the 500 most variable features, then centered and scaled them with prcomp. In a separate analysis I compared ALL and AML with Welch tests and adjusted the p-values for multiple testing. [Open the implementation](analyze.R#L32-L35).
@@ -18,17 +18,17 @@ variance <- pca$sdev^2/sum(pca$sdev^2)
 colors <- ifelse(group=='ALL','#2878A5','#CB654A')
 ```
 
-<details>
-<summary>Open the annotated code screenshot</summary>
+![R expression analysis script open in Visual Studio](../../docs/visual-studio/06-code.jpg)
 
-![Source walkthrough showing the input, method and exact code excerpt](walkthrough/source.png)
+3. **Inspect the output.** Open [summary.csv](reports/summary.csv) in Visual Studio.
 
-</details>
+![Leukemia expression summary open in Visual Studio](../../docs/visual-studio/06-output.jpg)
 
-3. **Inspect the output.** Open [summary.csv](reports/summary.csv) and the [analysis figure](reports/pca.png). The screenshot puts the saved output beside a short explanation.
+The `Rscript` run passed the dimension, class count, finite value and adjusted p-value checks. It generated the PCA plot shown below in Visual Studio.
+
+[![Leukemia sample PCA opened in the Visual Studio image editor](../../docs/visual-studio/06-plot.jpg)](reports/pca.png)
+
 4. **Interpret the result.** PC1 and PC2 together explain 32.38% of variation among the selected features. Nearby points are samples with similar profiles in these two dimensions. The separate tests yielded 695 adjusted hits in this cohort.
-
-![Output walkthrough showing measured values and their interpretation](walkthrough/result.png)
 
 ## Run
 
@@ -73,5 +73,3 @@ Future work: analyze original assay metadata, update probe annotations, use a co
 - Dudoit, Fridlyand and Speed (2002), *Comparison of discrimination methods for the classification of tumors using gene expression data*, JASA 97(457):77–87 (source preprocessing).
 - [Bioconductor multtest 2.68.0](https://bioconductor.org/packages/release/bioc/html/multtest.html), [reference manual, Golub data section](https://bioconductor.org/packages/release/bioc/manuals/multtest/man/multtest.pdf), [package DOI](https://doi.org/10.18129/B9.bioc.multtest). Package license: LGPL. The package/data are not relicensed by the MIT license for this project's original code. Original raw expression matrices are not redistributed here.
 - [Source archive SHA-256](provenance.json) records the downloaded Bioconductor mirror artifact.
-
-[See the code and output in Visual Studio](../../docs/visual-studio/README.md#06-leukemia-expression-analysis).

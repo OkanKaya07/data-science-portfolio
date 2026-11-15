@@ -1,0 +1,4 @@
+model,cv_average_precision_mean,cv_average_precision_std,cv_roc_auc_mean,cv_roc_auc_std,cv_precision_at_capacity_mean,cv_recall_at_capacity_mean,cv_lift_at_capacity_mean,selected,rows,selected_rows,selected_fraction,base_subscription_rate,precision_at_capacity,recall_at_capacity,lift_at_capacity,roc_auc,average_precision,brier_score,subscribers_in_selected_rows
+logistic_regression,0.085919,0.066420,0.537867,0.078508,0.094660,0.180037,1.199737,yes,8238.000000,1236.000000,0.150036,0.308327,0.595469,0.289764,1.931290,0.746876,0.533350,0.191247,736.000000
+random_forest,0.083057,0.066903,0.509891,0.057294,0.090049,0.170459,1.135908,no,,,,,,,,,,,
+dummy_prior,0.070625,0.039831,0.500000,0.000000,0.079369,0.148963,0.992667,no,,,,,,,,,,,

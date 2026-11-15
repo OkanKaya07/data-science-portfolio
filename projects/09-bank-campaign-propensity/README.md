@@ -61,6 +61,8 @@ Under the fixed 15% capacity policy, the model selected **1,236 of 8,238** later
 
 For comparison, a random 15% of this holdout would contain about 381 subscriptions at the observed base rate; this ranking selected 736. That is a concentration result on one historical split, not a causal estimate of subscriptions created by outreach or a guarantee for another campaign.
 
+![Bar chart comparing the 30.8% subscription rate in the full holdout with 59.5% in the top-scored 15%](reports/holdout_subscription_rates.png)
+
 ## Outputs
 
 | File | Contents |
@@ -69,6 +71,7 @@ For comparison, a random 15% of this holdout would contain about 381 subscriptio
 | [model_comparison.csv](reports/model_comparison.csv) | Candidate averages and one final later-holdout result for the selected model |
 | [holdout_targeted_contacts.csv](reports/holdout_targeted_contacts.csv) | The 1,236 top-scored holdout rows, observed label, and model score; no personal identifiers |
 | [run_summary.json](reports/run_summary.json) | Source archive hash, split details, package versions, and measured metrics |
+| [holdout_subscription_rates.png](reports/holdout_subscription_rates.png) | Observed subscription rates for the full holdout and the selected contacts |
 
 ## Reproduce
 
@@ -82,6 +85,27 @@ python analyze.py
 ```
 
 The first run downloads and verifies the public UCI archive. Later runs reuse the verified local cache. The script writes all files in `reports/` and checks the expected table schema, target encoding, capacity selection, and leakage exclusion.
+
+To recreate the chart from the saved run summary, install Matplotlib and run [plot_results.py](plot_results.py) from the project folder:
+
+```sh
+python -m pip install matplotlib
+python plot_results.py
+```
+
+## Code and results in Visual Studio
+
+1. **Inspect the model pipeline.** Open [analyze.py](analyze.py) to see how the script trains on earlier rows, validates on later rows, and chooses the best candidate by development average precision.
+
+   ![Bank campaign analysis source open in Visual Studio](../../docs/visual-studio/09-code.jpg)
+
+2. **Run the analysis.** Use the reproduction commands above. The Visual Studio debugger run below uses Python 3.12.8 on Windows with the pinned analysis dependencies. It reports four passing tests, the selected model, and holdout metrics that match the published [run summary](reports/run_summary.json).
+
+   ![Bank campaign tests and holdout results in the Visual Studio Output window](../../docs/visual-studio/09-debug-output.jpg)
+
+3. **Compare the results visually.** The chart displays the observed subscription rate among all later contacts and among the 1,236 contacts selected by the fixed-capacity policy. The full candidate comparison is available in [model_comparison.csv](reports/model_comparison.csv).
+
+   ![Holdout subscription rate chart open in Visual Studio](../../docs/visual-studio/09-plot.jpg)
 
 ## Limitations and responsible use
 

@@ -10,6 +10,7 @@ These screenshots show the source files and saved project outputs open in Visual
 - [Leukemia expression analysis](#06-leukemia-expression-analysis)
 - [Pasilla RNA-seq](#07-pasilla-rna-seq)
 - [Diagnostic risk classification](#08-diagnostic-risk-classification)
+- [Bank campaign propensity](#09-bank-campaign-propensity)
 
 ## 01 Retail sales
 
@@ -108,3 +109,19 @@ These screenshots show the source files and saved project outputs open in Visual
 2. Open [model_metrics.csv](../../projects/08-diagnostic-risk-classification/reports/model_metrics.csv) to inspect the saved output.
 
    ![Diagnostic risk classification output in Visual Studio](08-output.jpg)
+
+## 09 Bank campaign propensity
+
+[Project instructions](../../projects/09-bank-campaign-propensity/README.md)
+
+1. Open [analyze.py](../../projects/09-bank-campaign-propensity/analyze.py) to inspect the temporal model comparison.
+
+   ![Bank campaign analysis source in Visual Studio](09-code.jpg)
+
+2. Run the analysis and inspect the test and holdout results.
+
+   ![Bank campaign tests and holdout results in Visual Studio](09-debug-output.jpg)
+
+3. Open the [holdout subscription rate chart](../../projects/09-bank-campaign-propensity/reports/holdout_subscription_rates.png) to compare the full holdout with the selected contacts.
+
+   ![Holdout subscription rate chart in Visual Studio](09-plot.jpg)

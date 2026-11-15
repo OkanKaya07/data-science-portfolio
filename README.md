@@ -30,7 +30,6 @@ These three projects offer different ways into my work. Each page includes the d
 | [Leukemia expression](projects/06-r-bioinformatics/README.md) | Base R · Welch tests · PCA | Explore variation across 38 tumor samples | [Code](projects/06-r-bioinformatics/analyze.R) · [Output](projects/06-r-bioinformatics/reports/summary.csv) |
 | [Pasilla RNA-seq](projects/07-pasilla-rnaseq/README.md) | Python · pandas · NumPy | Compare condition and read-layout patterns | [Code](projects/07-pasilla-rnaseq/analyze.py) · [Output](projects/07-pasilla-rnaseq/reports/samples.csv) |
 | [Diagnostic risk classification](projects/08-diagnostic-risk-classification/README.md) | Python · pandas · scikit-learn | Leakage-aware classification with a development-set threshold and untouched holdout | [Code](projects/08-diagnostic-risk-classification/analyze.py) · [Output](projects/08-diagnostic-risk-classification/reports/model_metrics.csv) |
-
 | [Bank campaign propensity](projects/09-bank-campaign-propensity/README.md) | Python · pandas · scikit-learn | Rank pre-contact subscription propensity with earlier-to-later validation and a fixed capacity policy | [Code](projects/09-bank-campaign-propensity/analyze.py) · [Output](projects/09-bank-campaign-propensity/reports/model_comparison.csv) |
 ## About my studies
 

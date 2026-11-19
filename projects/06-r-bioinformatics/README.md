@@ -2,14 +2,13 @@
 
 [← All projects](../../README.md#projects) · [Source code](analyze.R) · [Results](reports/summary.csv)
 
-**Tools** · Base R · Welch tests · PCA
+I compared ALL and AML samples in the preprocessed Golub microarray dataset: **3,051 expression features across 38 tumors**. The separate feature tests found **695 BH-adjusted hits**. I also used PCA to look at sample variation without using the class labels to select features.
 
-This project compares ALL and AML samples in the historical Golub dataset. It combines an overview of sample variation with a separate comparison of individual expression features.
+**Tools:** Base R · Welch tests · PCA
 
-## Code and results in R
+## The sample view
 
-1. **Check the expression matrix.** I loaded the preprocessed Golub microarray data and verified 3,051 features across 38 tumors. I treated the ALL and AML labels as sample groups, keeping their identities out of the PCA feature selection.
-2. **Build an unsupervised view.** I used base R to select the 500 most variable features, then centered and scaled them with prcomp. In a separate analysis I compared ALL and AML with Welch tests and adjusted the p-values for multiple testing. [Open the implementation](analyze.R#L32-L35).
+I selected the 500 most variable features, centered and scaled them, then ran PCA across samples. [The code](analyze.R#L32-L35) uses `prcomp`; group labels only supply the plot colors:
 
 ```r
 selected <- order(apply(x,1,var),decreasing=TRUE)[seq_len(500)]
@@ -20,7 +19,7 @@ colors <- ifelse(group=='ALL','#2878A5','#CB654A')
 
 ![R expression analysis script open in Visual Studio](../../docs/visual-studio/06-code.jpg)
 
-3. **Run the script.** With the repository root as the working directory, enter the following in the R console.
+With the repository root as the working directory, run this in the R console:
 
 ```r
 source("projects/06-r-bioinformatics/analyze.R")
@@ -28,11 +27,23 @@ source("projects/06-r-bioinformatics/analyze.R")
 
 ![R console showing the source command, passed validation checks and expression summary](r-console.jpg)
 
-The console prints the same counts and variance shares saved in [summary.csv](reports/summary.csv). The PCA scatter plot below uses the scores from that R session.
+The console prints the counts and variance shares saved in [summary.csv](reports/summary.csv). This plot uses the scores from that R session:
 
 [![Sample PCA in the R Graphics window beside the R console](r-pca.jpg)](reports/pca.png)
 
-4. **Interpret the result.** PC1 and PC2 together explain 32.38% of variation among the selected features. Nearby points are samples with similar profiles in these two dimensions. The separate tests yielded 695 adjusted hits in this cohort.
+PC1 explains **19.97%** and PC2 **12.41%** of variance among the selected scaled features, **32.38%** together. Nearby points have similar expression profiles in these two dimensions.
+
+![Unsupervised PCA](reports/pca.png)
+
+## Comparing individual features
+
+I checked the matrix dimensions, finite values and class-label counts before running two-sided Welch tests for all **3,051 features**. Effects are **AML minus ALL**, with Benjamini–Hochberg correction across the full test family. **695 features have BH-adjusted p < 0.05** in this cohort.
+
+The results include mean differences and nominal 95% Welch confidence intervals. These intervals are neither simultaneous nor FDR-adjusted. The supplied expression-scale differences **are not log₂ fold changes**. Gene descriptions and probe accessions retain the package annotation, including historical labels that may differ from modern gene identifiers.
+
+![Expression comparison](reports/differential_expression.png)
+
+The saved outputs include [all feature statistics](reports/gene_statistics.csv), [PCA scores](reports/pca_scores.csv), the [summary](reports/summary.csv) and [R session information](reports/sessionInfo.txt).
 
 ## Run from a terminal
 
@@ -43,33 +54,13 @@ Rscript projects/06-r-bioinformatics/analyze.R
 # Optional: supply an already downloaded multtest_2.68.0.tar.gz as the first argument.
 ```
 
-The script extracts only the Golub data object from the pinned source package into a temporary directory. It does not install or execute the package's R code. Analysis uses base R, with no extra package installation.
+The script extracts only the Golub data object from the pinned source package into a temporary directory. It does not install or execute the package's R code. The analysis uses base R and needs no extra packages.
 
-## Methods
+## How far the results go
 
-1. Validate matrix dimensions, finite values, and class-label counts.
-2. Run two-sided Welch tests per feature, with AML minus ALL as the effect direction.
-3. Apply Benjamini–Hochberg correction over all 3,051 tests.
-4. Report mean differences and nominal 95% Welch confidence intervals. These intervals are not simultaneous or FDR-adjusted.
-5. Select the 500 highest-variance features without class labels, center/scale them, and perform PCA across samples.
+This is a small, preprocessed historical cohort with no independent replication, batch adjustment or clinical validation. Original preprocessing already filtered the features, so the test family is the supplied **3,051-feature subset**, not every gene in the original assay. Correlated features complicate inference, and BH behavior depends on its dependence assumptions. PCA separation and small adjusted p-values do not establish a causal mechanism or diagnostic utility.
 
-The source is already preprocessed. Supplied expression-scale differences **must not be described as log₂ fold changes**. Gene descriptions and probe accessions preserve the package annotation, whose historical labels can differ from modern gene identifiers.
-
-## Measured outputs
-
-- **695** expression features have BH-adjusted p < 0.05 in this dataset.
-- PC1 explains **19.97%** and PC2 **12.41%** of variance among the selected scaled features.
-- [All feature statistics](reports/gene_statistics.csv), [PCA scores](reports/pca_scores.csv), [summary](reports/summary.csv), and [R session information](reports/sessionInfo.txt) are included.
-
-![Unsupervised PCA](reports/pca.png)
-
-![Expression comparison](reports/differential_expression.png)
-
-## Interpretation and limitations
-
-The discoveries concern associations in this small, preprocessed historical cohort. There is no independent replication, batch adjustment, or clinical validation. Features were filtered during the original published preprocessing, so the test family is the supplied 3,051-feature subset rather than all genes in the original assay. Correlated features complicate inference; BH behavior relies on its dependence assumptions. Neither PCA separation nor a small adjusted p-value proves a causal mechanism or diagnostic utility.
-
-Future work: analyze original assay metadata, update probe annotations, use a covariate-aware limma design, and replicate in an independent cohort.
+I would next examine original assay metadata, update probe annotations, use a covariate-aware limma design and replicate the analysis in an independent cohort.
 
 ## Sources and attribution
 

@@ -8,7 +8,7 @@ I graduated first in Mathematics at Yeditepe University and am looking for a wor
 
 ## Start here
 
-These three projects offer different ways into my work. Each page includes the data, code, output and an explanation of the result. The Python projects also describe the questions, the role of each library, what I learned and what I would improve next.
+These are three places to start. Each project links to the data, code and saved results, with an explanation of the choices I made and what the results can tell us.
 
 <table>
 <tr>
@@ -33,7 +33,7 @@ These three projects offer different ways into my work. Each page includes the d
 | [Bank campaign propensity](projects/09-bank-campaign-propensity/README.md) | Python · pandas · scikit-learn | Rank pre-contact subscription propensity with earlier-to-later validation and a fixed capacity policy | [Code](projects/09-bank-campaign-propensity/analyze.py) · [Output](projects/09-bank-campaign-propensity/reports/model_comparison.csv) |
 ## About my studies
 
-My current courses cover deep learning, optimization, simulation techniques and numerical methods. My mathematics degree included a Python project on fractals. I also completed preparatory biotechnology coursework, which connects to the expression-data projects here.
+My current courses cover deep learning, optimization, simulation techniques and numerical methods. During my mathematics degree, I worked on fractals with Python. I also completed preparatory biotechnology coursework, which gives some background for the expression-data projects here.
 
 ## Run locally
 
@@ -51,7 +51,9 @@ python -m unittest discover -s tests -v
 python -m unittest discover -s projects/05-python-air-quality -v
 ```
 
-`run.py` reproduces projects 1–3 and downloads their original UCI archives. `python run.py --download-only` downloads without analyzing. Projects 4–9 have their own instructions linked above. Raw archives, local caches, and SQLite databases are ignored by Git. Reports, charts, the Excel workbook, and source hashes are versioned. Unit tests use tiny constructed edge cases; all reported analytical results use real source data. Do not load pickle caches from third parties; delete your local `data/cache/` to rebuild.
+`run.py` downloads the original UCI archives and runs projects 1–3. Use `python run.py --download-only` if you only need the data. Projects 4–9 have their own instructions on the linked pages.
+
+I keep the reports, charts, Excel workbook and source hashes in Git. Raw archives, local caches and SQLite databases are ignored. The tests use small constructed cases to check edge cases; the reported analysis results come from the real source data. Do not load pickle caches from third parties; delete your local `data/cache/` to rebuild.
 
 ## Evidence and reproducibility
 
@@ -61,7 +63,7 @@ python -m unittest discover -s projects/05-python-air-quality -v
 - [Pipeline](run.py): download, cleaning, analysis, training, and export.
 - [Tests](tests/test_outputs.py): reconciliation, leakage checks, split integrity, and output validation.
 
-The small dataset checks and fixed random seeds make unexpected changes visible. Exact numeric results can vary slightly across numerical libraries and hardware. Dependency versions are pinned for the primary libraries; `environment.txt` records the actual local execution versions.
+I use checks and fixed random seeds to make changes in the results easier to spot. The main dependencies are pinned, and `environment.txt` records the versions used for the local run. Small numerical differences across library versions or hardware are still possible.
 
 ## Data sources and attribution
 
@@ -72,8 +74,8 @@ These two datasets are distributed by UCI under CC BY 4.0. Derived data and char
 
 ## Portfolio notes
 
-The question-led Python walkthroughs and learning sections take presentation inspiration from [Luke Barousse's Python Data Analytics Course](https://github.com/lukebarousse/Python_Data_Analytics_Course/tree/main/3_Project). The datasets, analyses and takeaways here come from the projects linked above.
+The project explanations take presentation inspiration from [Luke Barousse's Python Data Analytics Course](https://github.com/lukebarousse/Python_Data_Analytics_Course/tree/main/3_Project). The data, code and results for this portfolio are linked above.
 
 These projects were developed with AI assistance in coding and documentation. The linked scripts, datasets and output files document how the results were produced.
 
-Türkçe: Bu repo gerçek verilerle hazırlanmış yedi proje içerir. Excel, Python, SQL, makine öğrenmesi ve R biyoinformatik çalışmalarında yöntemler, sonuçlar ve sınırlamalar İngilizce açıklanmıştır.
+Türkçe: Bu repo gerçek verilerle hazırlanmış dokuz proje içerir. Excel, Python, SQL, makine öğrenmesi ve R biyoinformatik çalışmalarında ne yaptığımı, sonuçları ve sınırlamaları İngilizce anlattım.

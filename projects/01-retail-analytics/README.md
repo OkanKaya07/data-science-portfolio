@@ -4,28 +4,30 @@
 
 **Tools** · Python · pandas · SQLite · Matplotlib
 
-This project follows a retail dataset from invoice lines to monthly sales totals. The main question is how much of a change comes from order volume and how much comes from average order value.
+November 2011 had £1.50m in positive sales across 2,769 invoices. I used monthly sales, distinct order counts and average order value to check whether changes came from more orders or higher spending per order. December contains only nine days, so its smaller total cannot establish a fall in demand.
 
-## Questions I wanted to answer
+## What counts as a sale
 
-1. How do monthly positive sales and order counts change?
-2. Is a larger sales total associated with more orders, a higher average order value, or both?
-3. Which cleaning decisions affect the meaning of those totals?
+The UCI Online Retail workbook contains 541,909 invoice lines. I used pandas to audit missing customer IDs, exact duplicates, nonpositive prices and negative quantities before calculating line values. The audit found **5,268 exact duplicates** and **135,080 rows without customer IDs**. These conditions can overlap, so the counts are not separate exclusions to add together.
 
-## Tools and why I used them
+After removing exact duplicates, I kept positive quantities and prices on non-cancellation invoices:
 
-| Tool | Role in this project |
-|---|---|
-| pandas | Read the workbook, audit duplicates and missing IDs, filter invoice lines and calculate line values |
-| SQLite / SQL | Aggregate distinct orders and monthly sales; use `LAG` for the previous month's comparison |
-| Matplotlib | Plot the monthly totals so coverage and changes are visible |
+```python
+sales = frame[
+    (frame.Quantity > 0)
+    & (frame.UnitPrice > 0)
+    & ~frame.InvoiceNo.str.upper().str.startswith('C')
+].copy()
+```
 
-## Run the query in SQLite
+That leaves **524,878 positive-sales lines**. Missing customer IDs stay in these totals but are excluded from customer profiles. Negative-quantity transactions are audited separately; they cannot automatically be treated as matched refunds. Removing exact duplicates is also an assumption, since identical legitimate lines could exist. The [cleaning audit](../../reports/retail_audit.json) records these choices.
 
-1. **Audit invoice lines.** I started with 541,909 UCI Online Retail invoice lines. I removed exact duplicates and separated cancellations and nonpositive amounts before calculating positive sales.
-2. **Count orders once.** In SQLite, I grouped by month and counted distinct invoice numbers. Counting lines instead would give larger baskets more weight in the order count. [Open the implementation](../../sql/retail.sql#L3-L11).
-3. **Build the database.** Follow the [Python setup](../../README.md#run-locally) and run `python run.py` from the repository root in the Visual Studio terminal. The script creates `data/retail.sqlite` and loads the cleaned invoice lines into the `sales` table.
-4. **Run the query in DB Browser for SQLite.** Open `data/retail.sqlite`, select **Execute SQL**, open [retail.sql](../../sql/retail.sql), and run the script. The results grid shows 13 rows with monthly sales, order counts, average order value, and month-over-month growth. The same results are available in [monthly_sales.csv](../../reports/monthly_sales.csv).
+I used SQLite to calculate monthly sales, distinct invoices, average order value and month-over-month growth with a CTE and `LAG`. The [query](../../sql/retail.sql#L3-L11) counts each invoice once, since counting lines as orders would give larger baskets more weight. Country-level totals show geographic concentration. All values are nominal GBP.
+
+## Run the analysis and SQL query
+
+1. Follow the [Python setup](../../README.md#run-locally), then run `python run.py` from the repository root in the Visual Studio terminal. This creates `data/retail.sqlite` and loads the cleaned lines into the `sales` table.
+2. In DB Browser for SQLite, open `data/retail.sqlite`, select **Execute SQL**, open [retail.sql](../../sql/retail.sql), and run it. The grid has 13 monthly rows. The same output is saved in [monthly_sales.csv](../../reports/monthly_sales.csv).
 
 ```sql
 -- Positive sales only. Returns are audited separately by the pipeline.
@@ -44,25 +46,17 @@ FROM monthly ORDER BY month;
 
 ![The retail SQL query and all 13 result rows in DB Browser for SQLite](sqlite-query.jpg)
 
-### Python output and sales chart
-
-**Visual Studio Output.** Running `run.py` in the Python debugger printed the sales audit, including 541,909 input rows and 524,878 positive sales rows.
+The Visual Studio Python debugger output shows the audit, including the 541,909 input rows and 524,878 positive-sales rows.
 
 ![Retail sales audit printed in the Visual Studio Output window](../../docs/visual-studio/01-03-debug-output.jpg)
+
+I used Matplotlib to plot the monthly totals. The short final month is visible in the chart.
 
 [![Monthly sales chart opened in the Visual Studio image editor](../../docs/visual-studio/01-plot.jpg)](../../reports/retail_monthly.png)
 
 ![Monthly sales chart](../../reports/retail_monthly.png)
 
-**Interpret the result.** November 2011 reached £1.50m across 2,769 invoices. December includes only nine days, so the last bar cannot establish a fall in demand.
-
-## Approach
-
-The source workbook has 541,909 transaction lines. The pipeline audits missing customer identifiers, exact duplicates, nonpositive prices, and negative quantities. It removes exact duplicates, separates negative-quantity transactions, and defines positive sales as positive quantity and price on non-cancellation invoices. Missing customer IDs remain in sales totals.
-
-SQLite queries aggregate invoices into monthly sales, orders, average order value, and month-over-month growth using a CTE and `LAG`. Country-level results reveal geographic concentration. Values are nominal GBP. Positive sales are not profit or accounting net revenue: costs, taxes, matched returns, and adjustments are unavailable. Dropping exact duplicate rows is an explicit assumption; identical legitimate lines could exist.
-
-## Deliverables
+## Reports and limits
 
 - [SQL query](../../sql/retail.sql)
 - [Monthly KPIs](../../reports/monthly_sales.csv)
@@ -70,33 +64,6 @@ SQLite queries aggregate invoices into monthly sales, orders, average order valu
 - [Cleaning audit](../../reports/retail_audit.json)
 - [Measured findings](../../reports/FINDINGS.md)
 
-## Interpretation and limits
+These are positive sales, not profit or accounting net revenue. Costs, taxes, matched returns and adjustments are unavailable, so the totals are not enough to recommend budget changes. The first and last months also have incomplete customer observation windows.
 
-The first and last months also have incomplete customer observation windows. Negative quantities are audited separately and cannot automatically be interpreted as matched refunds. Costs and matched returns would be needed before using these totals to recommend budget changes.
-
-## What I learned
-
-- **Define the metric before plotting it.** The filtering rule produces positive sales. It does not produce net revenue or profit, because returns are not matched and costs are unavailable.
-- **The unit of analysis changes the answer.** A row is an invoice line, not an order. Counting distinct invoice numbers prevents a large basket from becoming several orders.
-- **Missing data needs a purpose-specific decision.** A missing customer ID does not invalidate a sales amount. I retain those rows for sales reporting but exclude them when building customer profiles.
-- **A chart needs its observation window.** December's short coverage makes a full-month comparison misleading. A small final bar is not enough to conclude that demand collapsed.
-
-## Challenges and decisions
-
-The main difficulty is deciding which records belong in the analysis. The audit records **5,268 exact duplicates** and **135,080 rows without customer IDs** in the original file. These counts describe different conditions and should not be added as though they were disjoint exclusions.
-
-This is the positive-sales filter used in the pipeline after duplicate removal:
-
-```python
-sales = frame[
-    (frame.Quantity > 0)
-    & (frame.UnitPrice > 0)
-    & ~frame.InvoiceNo.str.upper().str.startswith('C')
-].copy()
-```
-
-The result contains **524,878 lines**. I keep the [audit](../../reports/retail_audit.json) alongside the output so the filtering decision is visible, rather than presenting the chart as if it came directly from untouched data.
-
-## What I would improve next
-
-I would add an explicit coverage column to the monthly report and inspect non-product stock codes. Matching returns to original invoices would be a separate next step before describing the result as net sales.
+I would add a coverage column to the monthly report and inspect non-product stock codes next. Matching returns to original invoices would be needed before describing the result as net sales.

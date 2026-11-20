@@ -85,6 +85,8 @@ The Visual Studio screenshots show [analyze.py](analyze.py), debugger output and
 
 ![Bank campaign tests and holdout results in the Visual Studio Output window](../../docs/visual-studio/09-debug-output.jpg)
 
-![Holdout subscription rate chart open in Visual Studio](../../docs/visual-studio/09-plot.jpg)
+![Observed holdout subscription rate comparison in Visual Studio](../../docs/visual-studio/09-chart.jpg)
+
+The shared [portfolio chart script](../../plot_results.py) also opens this comparison from the saved evaluation: run `python plot_results.py --project 09 --show` from the repository root. The bars describe observed subscription rates, not the causal effect of contacting people.
 
 **Citation:** Moro, S., Rita, P., & Cortez, P. (2014). *Bank Marketing* [Dataset]. UCI Machine Learning Repository. [https://doi.org/10.24432/C5K306](https://doi.org/10.24432/C5K306). Associated study: *A Data-Driven Approach to Predict the Success of Bank Telemarketing*, *Decision Support Systems*, 62, 22–31.

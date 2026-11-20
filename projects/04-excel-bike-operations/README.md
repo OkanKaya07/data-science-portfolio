@@ -4,7 +4,7 @@
 
 With **2012 / Working day** selected, this dashboard shows **1,436,146 rentals over 250 days**. I added year and day-type filters to my monthly bike rental report so readers can compare seasonal demand, user types and weather. I kept the original monthly report in a separate sheet.
 
-![Dashboard open in Microsoft Excel with the 2012 working-day filter and all three charts](excel-dashboard.jpg)
+![Dashboard and its three native charts open in Microsoft Excel](excel-charts.jpg)
 
 The formula bar shows how the selected total is calculated.
 

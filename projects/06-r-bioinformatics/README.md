@@ -41,7 +41,25 @@ I checked the matrix dimensions, finite values and class-label counts before run
 
 The results include mean differences and nominal 95% Welch confidence intervals. These intervals are neither simultaneous nor FDR-adjusted. The supplied expression-scale differences **are not log₂ fold changes**. Gene descriptions and probe accessions retain the package annotation, including historical labels that may differ from modern gene identifiers.
 
-![Expression comparison](reports/differential_expression.png)
+### Volcano-style plot in R
+
+The volcano-style view places the **mean expression difference (AML minus ALL)** on the horizontal axis and **−log₁₀(BH-adjusted p)** on the vertical axis. It uses the supplied expression scale, so the horizontal values must not be read as log₂ fold changes. The horizontal reference marks adjusted p = 0.05; the plot does not add an arbitrary fold-change cutoff.
+
+The [R plotting functions](plot_results.R) redraw the saved statistics in an R session. From the repository root:
+
+```r
+source("projects/06-r-bioinformatics/plot_results.R")
+show_pca()
+show_volcano()
+```
+
+![R volcano plotting code](r-volcano-code.jpg)
+
+[![Volcano-style expression comparison displayed in R](r-volcano.jpg)](reports/volcano.png)
+
+![Volcano-style plot of all 3,051 expression features](reports/volcano.png)
+
+Points passing the BH-adjusted 0.05 threshold are distinguished by the direction of their mean difference. The 695 hits remain exploratory cohort results, as in the statistics above. Running [analyze.R](analyze.R) also saves this figure along with the PCA and feature tables.
 
 The saved outputs include [all feature statistics](reports/gene_statistics.csv), [PCA scores](reports/pca_scores.csv), the [summary](reports/summary.csv) and [R session information](reports/sessionInfo.txt).
 

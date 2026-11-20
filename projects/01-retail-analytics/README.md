@@ -52,9 +52,11 @@ The Visual Studio Python debugger output shows the audit, including the 541,909 
 
 I used Matplotlib to plot the monthly totals. The short final month is visible in the chart.
 
-[![Monthly sales chart opened in the Visual Studio image editor](../../docs/visual-studio/01-plot.jpg)](../../reports/retail_monthly.png)
+[![Monthly sales chart from the saved report in Visual Studio](../../docs/visual-studio/01-chart.jpg)](../../reports/retail_monthly.png)
 
 ![Monthly sales chart](../../reports/retail_monthly.png)
+
+The [chart script](../../plot_results.py) redraws the saved monthly table without downloading or fitting anything. From the repository root, run `python plot_results.py --project 01 --show`. December's partial coverage remains explicit in the chart.
 
 ## Reports and limits
 

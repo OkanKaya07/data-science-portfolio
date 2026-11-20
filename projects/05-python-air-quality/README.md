@@ -4,7 +4,7 @@
 
 I used Python and SQLite to turn the UCI sensor CSV into a daily report. The file contains **9,357 timestamped observations**, but some days have too few valid readings for a useful comparison. I kept the observed CO mean alongside a second mean that stays blank when coverage falls below the selected threshold.
 
-**Tools:** Python standard library · SQLite · unittest
+**Tools:** Python standard library · SQLite · unittest; Matplotlib for the saved-report chart
 
 ## Run the pipeline
 
@@ -69,6 +69,14 @@ Open [daily_summary.csv](reports/daily_summary.csv) in Visual Studio to inspect 
 The Visual Studio debugger run loaded the same **9,357 observations**:
 
 ![Air quality record count printed in the Visual Studio Output window](../../docs/visual-studio/05-debug-output.jpg)
+
+## Plotting daily CO and coverage
+
+The chart below reads the saved daily report. Gaps in the coverage-qualified mean remain gaps rather than becoming zero measurements. Valid-hour counts show why some days do not receive a qualified mean.
+
+![Daily CO measurements and valid-hour coverage chart in Visual Studio](../../docs/visual-studio/05-chart.jpg)
+
+From the repository root, run `python plot_results.py --project 05 --show`. The [plotting code](../../plot_results.py) uses the existing CSV; it does not alter the pipeline's 18-hour coverage rule or impute readings.
 
 ## Source and limits
 

@@ -44,6 +44,10 @@ I used Matplotlib to plot recency against log spending. Frequency also affects c
 
 ![Customer clusters by purchase recency and spending](../../reports/customer_segments.png)
 
+The profile comparison below uses the saved group summaries, so customer counts and spending can be read alongside the scatter plot. It does not assign new customers to clusters or refit K-means. Run `python plot_results.py --project 02 --show` from the repository root; the plotting code is in [plot_results.py](../../plot_results.py).
+
+![Customer group profiles chart in Visual Studio](../../docs/visual-studio/02-chart.jpg)
+
 ## Reproduce and inspect
 
 Open the repository folder in Visual Studio, follow the [Python setup](../../README.md#run-locally), and run `python run.py` from the repository root in the Visual Studio terminal. Open [segment_profiles.csv](../../reports/segment_profiles.csv) to inspect the saved profiles. The same run generates the chart and prints the two group sizes in the Python debugger output.

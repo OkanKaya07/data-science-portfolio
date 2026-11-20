@@ -49,7 +49,14 @@ write.csv(data.frame(sample=paste0('sample_',seq_len(ncol(x))),group=group,PC1=p
 summary <- data.frame(genes=nrow(x),samples=ncol(x),ALL=sum(group=='ALL'),AML=sum(group=='AML'),
  bh_below_005=sum(results$fdr_BH<.05),pc1_variance=variance[1],pc2_variance=variance[2])
 write.csv(summary,file.path(out,'summary.csv'),row.names=FALSE)
+source('projects/06-r-bioinformatics/plot_results.R')
+png(file.path(out,'volcano.png'),width=1400,height=950,res=145)
+volcano_counts <- plot_volcano(results)
+dev.off()
+# RStudio and R GUI also show the same plot on the interactive graphics device.
+if (interactive()) plot_volcano(results)
 capture.output(sessionInfo(),file=file.path(out,'sessionInfo.txt'))
 cat('Validation passed: dimensions, class counts, finite values, BH bounds.\n')
 print(summary)
+print(volcano_counts)
 unlink(scratch,recursive=TRUE)

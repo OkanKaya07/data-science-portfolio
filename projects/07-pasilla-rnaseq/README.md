@@ -26,7 +26,7 @@ scores = U[:, :2] * s[:2]
 
 ![Sample PCA with condition shown by color and sequencing layout by shape](reports/pca.svg)
 
-The Python standard library handles downloads, Git blob checks and the labeled SVG. I generated the figure directly, without Matplotlib, Seaborn or a differential-expression package.
+The Python standard library handles downloads, Git blob checks and the labeled SVG. The analysis script generates that SVG directly, without Matplotlib, Seaborn or a differential-expression package. The separate saved-report view below uses Matplotlib to redraw the exported PCA coordinates.
 
 ## A descriptive gene comparison
 
@@ -56,7 +56,9 @@ The screenshots show the normalization and PCA code, [samples.csv](reports/sampl
 
 ![Pasilla sample PCA scores printed in the Visual Studio Output window](../../docs/visual-studio/07-debug-output.jpg)
 
-[![Rendered Pasilla sample PCA opened in the Visual Studio image editor](../../docs/visual-studio/07-plot.jpg)](reports/pca.svg)
+[![Pasilla PCA redrawn from the saved sample table in Visual Studio](../../docs/visual-studio/07-chart.jpg)](reports/pca.svg)
+
+Run `python plot_results.py --project 07 --show` from the repository root to open this view. The [chart code](../../plot_results.py) retains both condition and sequencing layout, so the seven libraries can be compared without hiding either annotation. It reads the saved scores rather than recomputing PCA or testing differential expression.
 
 ## Run it
 

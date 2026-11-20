@@ -59,6 +59,14 @@ The screenshots show the [pipeline code](analyze.py), saved comparison and debug
 
 ![Diagnostic classification metrics printed in the Visual Studio Output window](../../docs/visual-studio/08-debug-output.jpg)
 
+## Holdout chart
+
+The chart below uses the saved holdout labels, probabilities and flags. It makes the ranking and classification errors visible while keeping model and threshold selection separate from this display. These remain results from one historical split, not clinical validation.
+
+![Diagnostic classifier holdout evaluation chart in Visual Studio](../../docs/visual-studio/08-chart.jpg)
+
+From the repository root, run `python plot_results.py --project 08 --show`. The [plotting script](../../plot_results.py) reads [holdout_predictions.csv](reports/holdout_predictions.csv); it does not refit a classifier or tune a threshold on the holdout.
+
 ## Run it
 
 Tested with Python 3.12.14, NumPy 2.3.5, pandas 2.2.3 and scikit-learn 1.8.0. From the repository root or its Visual Studio terminal:

@@ -46,9 +46,11 @@ The shared script prints the holdout results in the Python debugger output. Grad
 
 I used Matplotlib to compare observed rentals with predictions on the final holdout. Large gaps between the lines are individual misses.
 
-[![Observed and estimated rentals opened in the Visual Studio image editor](../../docs/visual-studio/03-plot.jpg)](../../reports/bike_holdout.png)
+[![Observed and estimated daily rentals in Visual Studio](../../docs/visual-studio/03-chart.jpg)](../../reports/bike_holdout.png)
 
 ![Observed and estimated rentals on the chronological holdout](../../reports/bike_holdout.png)
+
+To redraw this comparison from the saved predictions, run `python plot_results.py --project 03 --show` from the repository root. The [plotting code](../../plot_results.py) keeps the dates in order and uses the existing holdout predictions, without selecting or fitting a model again.
 
 The outputs include the split boundaries and predictions as well as the scores:
 

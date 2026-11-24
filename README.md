@@ -8,13 +8,13 @@ I graduated first in Mathematics at Yeditepe University and am looking for a wor
 
 ## Start here
 
-These are three places to start. Each project links to the data, code and saved results, with an explanation of the choices I made and what the results can tell us.
+Start with my SQL analysis and Python ETL pipeline, then explore the Excel dashboard. Each project links to the data, code and saved results, with an explanation of the choices I made and what the results can tell us.
 
 <table>
 <tr>
-<td width="33%" valign="top"><a href="projects/01-retail-analytics/README.md"><strong>Retail sales · Python &amp; SQL</strong></a><br><a href="projects/01-retail-analytics/README.md"><img src="reports/retail_monthly.png" alt="Monthly positive retail sales" width="280"></a><br>From 541,909 invoice lines to monthly sales, order counts and average order value.</td>
-<td width="33%" valign="top"><a href="projects/03-bike-demand/README.md"><strong>Bike demand · Machine learning</strong></a><br><a href="projects/03-bike-demand/README.md"><img src="reports/bike_holdout.png" alt="Observed and estimated rentals on held-out dates" width="280"></a><br>Three models compared using chronological validation. Holdout MAE of 725 rentals for the selected model.</td>
-<td width="33%" valign="top"><a href="projects/07-pasilla-rnaseq/README.md"><strong>Pasilla · RNA-seq exploration</strong></a><br><a href="projects/07-pasilla-rnaseq/README.md"><img src="projects/07-pasilla-rnaseq/reports/pca.svg" alt="PCA of seven RNA-seq libraries" width="280"></a><br>A sample comparison that considers both knockdown status and sequencing layout.</td>
+<td width="33%" valign="top"><a href="projects/01-retail-analytics/README.md"><strong>Retail sales · SQL &amp; Python</strong></a><br><a href="projects/01-retail-analytics/README.md"><img src="reports/retail_monthly.png" alt="Monthly positive retail sales" width="280"></a><br>541,909 invoice lines audited; a SQLite CTE and LAG track monthly sales, orders and average order value.<br><a href="sql/retail.sql">SQL query</a> · <a href="reports/monthly_sales.csv">Results</a></td>
+<td width="33%" valign="top"><a href="projects/05-python-air-quality/README.md"><strong>Air quality · Python ETL &amp; SQLite</strong></a><br><a href="projects/05-python-air-quality/README.md"><img src="docs/visual-studio/05-chart.jpg" alt="Daily CO averages and valid-hour coverage" width="280"></a><br>9,357 sensor observations with explicit missing-value handling, duplicate rejection and five pipeline tests.<br><a href="projects/05-python-air-quality/air_quality.py">Pipeline</a> · <a href="projects/05-python-air-quality/test_air_quality.py">Tests</a></td>
+<td width="33%" valign="top"><a href="projects/04-excel-bike-operations/README.md"><strong>Bike operations · Excel</strong></a><br><a href="projects/04-excel-bike-operations/README.md"><img src="projects/04-excel-bike-operations/excel-charts.jpg" alt="Excel bike dashboard with year and day-type filters" width="280"></a><br>731 daily records, year and day-type filters, and formulas checked across all nine selections.<br><a href="projects/04-excel-bike-operations/bike_operations.xlsx">Workbook</a> · <a href="projects/04-excel-bike-operations/verification.json">Checks</a></td>
 </tr>
 </table>
 
@@ -62,6 +62,7 @@ I keep the reports, charts, Excel workbook and source hashes in Git. Raw archive
 - [SQL](sql/retail.sql): monthly revenue, average order value, and month-over-month change.
 - [Pipeline](run.py): download, cleaning, analysis, training, and export.
 - [Tests](tests/test_outputs.py): reconciliation, leakage checks, split integrity, and output validation.
+- [Air-quality CI](.github/workflows/air-quality-tests.yml): five standard-library pipeline tests on relevant pushes and pull requests, without downloading source data.
 
 I use checks and fixed random seeds to make changes in the results easier to spot. The main dependencies are pinned, and `environment.txt` records the versions used for the local run. Small numerical differences across library versions or hardware are still possible.
 

@@ -45,7 +45,27 @@ Missing measurements become `None`/SQL `NULL`; real zeros stay zero. The full pa
 
 UCI lists 9,358 instances and a shorter date description. I report the counts and dates from the supplied file; the [quality report](reports/quality_report.json) records its hash for traceability.
 
-Five `unittest` tests pass, covering decimal/missing parsing, invalid schema/dates, duplicate timestamps, nonfinite numbers, and repeat loading.
+Five `unittest` tests pass, covering decimal/missing parsing, invalid schema/dates, duplicate timestamps, nonfinite numbers, and repeat loading. The [GitHub Actions workflow](../../.github/workflows/air-quality-tests.yml) runs this suite with Python 3.12 on relevant pushes and pull requests, and can also be started manually. These tests use synthetic input and the standard library; they need no source-data download or package installation.
+
+## Failure example: a duplicate timestamp
+
+From the repository root, run this in Python to repeat the small synthetic row from the [existing test fixture](test_air_quality.py):
+
+```python
+import sys
+sys.path.insert(0, "projects/05-python-air-quality")
+from test_air_quality import aq, HEADER, ROW
+
+aq.parse(HEADER + ROW + ROW)
+```
+
+The parser rejects the second reading rather than choosing which value to keep:
+
+```text
+ValueError: Duplicate timestamp at CSV line 3: 2004-03-10T18:00:00
+```
+
+The pipeline parses the complete CSV before calling `load_database`. I also checked the command-line failure using a temporary ZIP containing this duplicate: it exited with status 1 and `ETL failed: Duplicate timestamp at CSV line 3: 2004-03-10T18:00:00`, while the previously loaded database remained byte-for-byte unchanged. This example is constructed input, not an extra observation from UCI.
 
 ## A daily mean needs a count
 
